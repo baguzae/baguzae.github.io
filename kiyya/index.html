@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💌 Untuk Kiyya</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0414;
+--card:rgba(255,107,157,.05);--card2:rgba(255,107,157,.08);
+--text:#fff0f5;--text2:#d4a0b8;--text3:#8a5a78;
+--pink:#ff6b9d;--pink2:#ff4081;--pink3:#ffb6c1;--pink4:#ffd4e5;
+--gold:#ffd700;--glow:rgba(255,107,157,.15);
+--border:rgba(255,107,157,.08);--border2:rgba(255,107,157,.15)
+}
+.light-mode{
+--bg:#fff0f5;
+--card:rgba(255,64,129,.04);--card2:rgba(255,64,129,.07);
+--text:#2d0a1e;--text2:#8a4060;--text3:#b07090;
+--pink:#e91e63;--pink2:#c2185b;--pink3:#f48fb1;--pink4:#fce4ec;
+--gold:#c89000;--glow:rgba(233,30,99,.08);
+--border:rgba(233,30,99,.08);--border2:rgba(233,30,99,.14)
+}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;-webkit-font-smoothing:antialiased;transition:background .5s,color .5s}
+::selection{background:var(--pink);color:#fff}
+canvas#bgC{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ============ LOADING ============ */
+#loadingScreen{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s}
+#loadingScreen.hide{opacity:0;pointer-events:none}
+.ld-h{font-size:44px;animation:hb 1.2s ease-in-out infinite}
+@keyframes hb{0%,100%{transform:scale(1)}25%{transform:scale(1.2)}40%{transform:scale(1)}60%{transform:scale(1.15)}}
+.ld-n{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--pink);margin-top:18px;opacity:0;animation:su .7s ease .3s forwards}
+.ld-s{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text3);margin-top:6px;opacity:0;animation:su .7s ease .6s forwards}
+.ld-bar{width:130px;height:2px;background:var(--border2);border-radius:2px;margin-top:16px;overflow:hidden;opacity:0;animation:su .5s ease .8s forwards}
+.ld-fi{height:100%;background:linear-gradient(90deg,var(--pink),var(--pink3));border-radius:2px;animation:bfill 2.2s ease-in-out forwards}
+@keyframes bfill{0%{width:0}100%{width:100%}}
+@keyframes su{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+
+/* ============ ENVELOPE ============ */
+#envScreen{position:fixed;inset:0;z-index:150;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s}
+#envScreen.hide{opacity:0;pointer-events:none}
+.env-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.ep{position:absolute;border-radius:50%;opacity:0;animation:epf linear infinite}
+@keyframes epf{0%{transform:translateY(0) scale(0);opacity:0}10%{opacity:.35}85%{opacity:.25}100%{transform:translateY(-105vh) scale(1);opacity:0}}
+
+.env-area{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+
+/* Envelope */
+.env-box{width:280px;position:relative}
+.env-body{width:280px;height:140px;background:linear-gradient(150deg,var(--pink3),var(--pink));border-radius:0 0 12px 12px;position:relative;box-shadow:0 14px 45px rgba(255,107,157,.3)}
+.env-body::after{content:'';position:absolute;inset:0;background:linear-gradient(150deg,rgba(255,255,255,.16),transparent);border-radius:0 0 12px 12px}
+.env-shade{position:absolute;bottom:8px;left:14px;right:14px;height:90px;background:var(--pink4);border-radius:4px;opacity:.35}
+
+.env-flap{width:280px;height:95px;position:relative;transform-origin:top center;transition:transform .9s cubic-bezier(.4,0,.2,1);z-index:3}
+.env-flap::before{content:'';position:absolute;inset:0;background:linear-gradient(150deg,var(--pink2),var(--pink));clip-path:polygon(0 0,50% 100%,100% 0)}
+.env-box.opened .env-flap{transform:rotateX(180deg)}
+
+.env-seal{position:absolute;top:32px;left:50%;transform:translateX(-50%);width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe680,var(--gold),#b8860b);z-index:5;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 18px rgba(255,215,0,.4);cursor:pointer;transition:transform .3s}
+.env-seal:hover{transform:translateX(-50%) scale(1.12)}
+.env-box.opened .env-seal{animation:spop .5s .15s forwards}
+@keyframes spop{to{transform:translateX(-50%) scale(0);opacity:0}}
+
+/* Letter */
+.env-letter{position:absolute;left:18px;right:18px;bottom:8px;background:#fffef8;border-radius:5px;z-index:2;overflow:hidden;box-shadow:0 -2px 12px rgba(0,0,0,.08);max-height:0;transition:max-height 1s cubic-bezier(.16,1,.3,1) .5s}
+.env-box.opened .env-letter{max-height:250px}
+
+.ltr-inner{padding:18px 16px}
+.ltr-line{font-family:'Playfair Display',serif;font-size:13px;line-height:2;color:#3d0a1e;opacity:0;transform:translateY(5px);transition:opacity .35s,transform .35s}
+.ltr-line.vis{opacity:1;transform:translateY(0)}
+
+/* Continue button - SEPARATE from envelope */
+.go-btn{margin-top:24px;display:inline-flex;align-items:center;gap:6px;padding:10px 26px;background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;border:none;border-radius:24px;font-size:13px;font-family:'Sora',sans-serif;font-weight:500;cursor:pointer;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s,box-shadow .3s;pointer-events:none}
+.go-btn.vis{opacity:1;transform:translateY(0);pointer-events:auto}
+.go-btn:hover{box-shadow:0 8px 28px rgba(255,107,157,.5);transform:translateY(-2px)!important}
+
+.env-hint{text-align:center;margin-top:22px;transition:opacity .4s}
+.env-hint.gone{opacity:0;pointer-events:none}
+.env-hint p:first-child{font-family:'Playfair Display',serif;font-size:18px;color:var(--pink);font-weight:600}
+.env-hint p:last-child{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);margin-top:5px;animation:pls 2s ease-in-out infinite}
+@keyframes pls{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ============ MAIN SITE ============ */
+#siteWrap{position:fixed;inset:0;z-index:1;overflow-y:auto;overflow-x:hidden;opacity:0;pointer-events:none;transition:opacity 1s}
+#siteWrap.show{opacity:1;pointer-events:auto}
+.site-inner{position:relative;z-index:2;min-height:100vh}
+
+/* Nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,var(--bg) 50%,transparent)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--text);text-decoration:none;transition:color .3s}
+.nav-logo:hover{color:var(--pink)}
+.nav-links{display:flex;gap:22px}
+.nav-links a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);text-decoration:none;transition:color .3s;font-weight:500}
+.nav-links a:hover{color:var(--pink)}
+
+/* Moon */
+.moon-box{position:relative;width:150px;height:150px;margin:0 auto}
+.moon{width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff5f8,#ffc1d5 50%,#ff8fab);box-shadow:0 0 55px rgba(255,107,157,.28),0 0 110px rgba(255,107,157,.1),inset -8px -8px 18px rgba(200,60,100,.2);position:relative;animation:mf 7s ease-in-out infinite}
+.moon::before{content:'';position:absolute;top:14px;left:26px;width:18px;height:18px;border-radius:50%;background:rgba(200,80,120,.1)}
+.moon::after{content:'';position:absolute;top:40px;right:28px;width:11px;height:11px;border-radius:50%;background:rgba(200,80,120,.08)}
+.m-halo{position:absolute;inset:-26px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,157,.08),transparent 70%);animation:hp 5s ease-in-out infinite}
+.m-halo2{position:absolute;inset:-52px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,157,.03),transparent 65%);animation:hp 5s ease-in-out 2.5s infinite}
+@keyframes mf{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+@keyframes hp{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.1);opacity:.5}}
+
+/* Name glow */
+.ng{background:linear-gradient(135deg,var(--pink),var(--pink3),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative}
+.ng::after{content:attr(data-t);position:absolute;inset:0;background:linear-gradient(135deg,var(--pink),var(--pink3),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:blur(18px);opacity:.3;z-index:-1}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}.rv.vis{opacity:1;transform:translateY(0)}
+.rvl{opacity:0;transform:translateX(-34px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}.rvl.vis{opacity:1;transform:translateX(0)}
+.rvr{opacity:0;transform:translateX(34px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}.rvr.vis{opacity:1;transform:translateX(0)}
+.rvs{opacity:0;transform:scale(.85);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}.rvs.vis{opacity:1;transform:scale(1)}
+.d1{transition-delay:.12s}.d2{transition-delay:.24s}.d3{transition-delay:.36s}.d4{transition-delay:.48s}.d5{transition-delay:.6s}.d6{transition-delay:.72s}.d7{transition-delay:.84s}
+
+/* Glass */
+.gc{background:var(--card2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border2);border-radius:16px;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .4s,background .5s}
+.gc:hover{transform:translateY(-4px);border-color:rgba(255,107,157,.22);box-shadow:0 14px 36px rgba(0,0,0,.12),0 0 28px var(--glow)}
+
+/* Section header */
+.sl{width:38px;height:2px;background:linear-gradient(90deg,var(--pink),var(--pink3));border-radius:2px;margin:0 auto 10px}
+.slb{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;font-weight:500}
+.st{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,4.5vw,2.6rem);font-weight:600;color:var(--text);line-height:1.15}
+
+.badge{min-width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+
+.pc{position:relative;overflow:hidden;border-radius:12px;cursor:pointer;aspect-ratio:4/3}
+.pc img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.pc:hover img{transform:scale(1.1)}
+.pco{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent 55%);opacity:0;transition:opacity .4s;display:flex;align-items:flex-end;padding:12px}
+.pc:hover .pco{opacity:1}
+.ac{border:1.5px dashed var(--border2);border-radius:12px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;background:var(--card)}
+.ac:hover{border-color:var(--pink);background:var(--glow)}
+
+.tll{position:absolute;left:15px;top:0;bottom:0;width:1.5px;background:linear-gradient(to bottom,var(--pink),var(--pink3) 50%,var(--border))}
+.tld{width:9px;height:9px;border-radius:50%;background:var(--pink);border:2.5px solid var(--bg);box-shadow:0 0 10px var(--glow);flex-shrink:0;position:relative;z-index:2;transition:background .5s,border-color .5s}
+
+/* Controls */
+.cw{position:fixed;bottom:18px;right:18px;z-index:60;display:flex;flex-direction:column;gap:8px}
+.cb{width:42px;height:42px;border-radius:50%;border:1px solid var(--border2);background:var(--card2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;color:var(--text2)}
+.cb:hover{transform:scale(1.1);border-color:var(--pink);color:var(--pink);box-shadow:0 4px 16px var(--glow)}
+
+.mbar{position:fixed;bottom:18px;left:18px;z-index:60;display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:36px;background:var(--card2);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border2);transition:background .5s}
+.eq{display:flex;align-items:flex-end;gap:2px;height:13px}
+.eb{width:2.5px;border-radius:2px;background:var(--pink);transition:background .5s}
+.eb.on{animation:eqA .5s ease-in-out infinite alternate}
+.eb.off{height:2.5px!important}
+@keyframes eqA{0%{height:2.5px}100%{height:13px}}
+.vs{-webkit-appearance:none;appearance:none;width:46px;height:2.5px;background:var(--border2);border-radius:2px;outline:none;cursor:pointer}
+.vs::-webkit-slider-thumb{-webkit-appearance:none;width:9px;height:9px;background:var(--pink);border-radius:50%;cursor:pointer}
+.mb{background:none;border:none;cursor:pointer;color:var(--text2);padding:2px;display:flex;align-items:center;justify-content:center;transition:color .3s}
+.mb:hover{color:var(--pink)}
+
+.lb{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .4s;cursor:pointer}
+.lb.on{opacity:1;visibility:visible}
+.lb img{max-width:86%;max-height:80vh;border-radius:10px;transform:scale(.9);transition:transform .4s cubic-bezier(.16,1,.3,1);box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.lb.on img{transform:scale(1)}
+
+.float{animation:fl 5s ease-in-out infinite}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.pgl{animation:pgl 4s ease-in-out infinite}
+@keyframes pgl{0%,100%{box-shadow:0 0 18px var(--glow),0 0 36px transparent}50%{box-shadow:0 0 30px var(--glow),0 0 56px var(--glow)}}
+.spk{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--pink3);pointer-events:none;animation:tw 2.2s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1)}}
+.cld{position:absolute;background:rgba(255,107,157,.018);border-radius:50px;filter:blur(40px);pointer-events:none;animation:drift linear infinite}
+.light-mode .cld{background:rgba(233,30,99,.025)}
+@keyframes drift{0%{transform:translateX(-220px)}100%{transform:translateX(calc(100vw + 220px))}}
+.orn{display:flex;align-items:center;gap:10px;justify-content:center}
+.orn-l{width:55px;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent)}
+.orn-d{width:4px;height:4px;border-radius:50%;background:var(--pink)}
+.qm{font-family:'Playfair Display',serif;font-size:min(90px,15vw);line-height:.9;color:var(--pink);opacity:.06;position:absolute;pointer-events:none}
+.gojo-f{animation:gf 5s ease-in-out infinite}
+@keyframes gf{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-11px) rotate(2deg)}}
+.sig{font-family:'Playfair Display',serif;font-style:italic}
+.sstar{position:fixed;height:1.5px;background:linear-gradient(to right,transparent,rgba(255,182,193,.6),transparent);z-index:1;pointer-events:none;border-radius:2px;opacity:0;animation:sho .7s linear forwards}
+@keyframes sho{0%{opacity:0;transform:rotate(-30deg) translateX(0)}10%{opacity:1}100%{opacity:0;transform:rotate(-30deg) translateX(340px)}}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--text3);border-radius:4px}
+@media(max-width:768px){
+.moon-box{width:110px;height:110px}.moon{width:110px;height:110px}
+.mbar{bottom:auto;top:14px;left:12px;padding:5px 8px;gap:6px}
+.cw{bottom:14px;right:12px}.cb{width:38px;height:38px}
+.nav-links{display:none}
+.env-box{width:240px}.env-body{width:240px;height:120px}.env-flap{width:240px;height:80px}
+.env-seal{width:44px;height:44px;font-size:16px;top:26px}
+.env-box.opened .env-letter{max-height:210px}
+.ltr-line{font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bgC"></canvas>
+<div class="lb" id="lb" onclick="this.classList.remove('on')"><img id="lbI" src="" alt=""></div>
+
+<!-- ==================== LOADING ==================== -->
+<div id="loadingScreen">
+  <div class="ld-h">💕</div>
+  <p class="ld-n">Kiyya</p>
+  <p class="ld-s">Aku punya sesuatu yang spesial</p>
+  <div class="ld-bar"><div class="ld-fi"></div></div>
+</div>
+
+<!-- ==================== ENVELOPE ==================== -->
+<div id="envScreen">
+  <div class="env-particles" id="envP"></div>
+  <div class="env-area">
+    <div class="env-box" id="envBox">
+      <div class="env-flap"></div>
+      <div class="env-seal" id="envSeal">💕</div>
+      <div class="env-body"><div class="env-shade"></div></div>
+      <div class="env-letter">
+        <div class="ltr-inner" id="ltrIn">
+          <p class="ltr-line" style="font-weight:600;font-size:15px;color:#e91e63">Dear Kiyya,</p>
+          <p class="ltr-line">Hai sayang... 🌸</p>
+          <p class="ltr-line">Aku tau ini cuma website sederhana,</p>
+          <p class="ltr-line">tapi setiap kata di sini aku tulis</p>
+          <p class="ltr-line">dengan sepenuh hati buat kamu.</p>
+          <p class="ltr-line" style="margin-top:4px">Dan ada banyak hal yang mau aku bilang...</p>
+        </div>
+      </div>
+    </div>
+    <button class="go-btn" id="goBtn">Buka selengkapnya ✨</button>
+    <div class="env-hint" id="envHint">
+      <p>Sebuah Surat Untukmu</p>
+      <p>Klik amplopnya untuk membuka</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MAIN SITE ==================== -->
+<div id="siteWrap">
+<div class="site-inner">
+
+<nav class="nav">
+  <a href="#" class="nav-logo" onclick="document.getElementById('siteWrap').scrollTo({top:0,behavior:'smooth'});return false">💌 Kiyya</a>
+  <div class="nav-links">
+    <a href="#msg" onclick="scrollTo_(event,'msg')">Pesan</a>
+    <a href="#gojo" onclick="scrollTo_(event,'gojo')">Gojo</a>
+    <a href="#gal" onclick="scrollTo_(event,'gal')">Galeri</a>
+    <a href="#gn" onclick="scrollTo_(event,'gn')">Goodnight</a>
+  </div>
+</nav>
+
+<div class="mbar" id="mbar">
+  <button class="mb" onclick="togM()" id="pbtn">
+    <i data-lucide="play" style="width:13px;height:13px"></i>
+  </button>
+
+  <div class="eq" id="eqW">
+    <div class="eb off" style="animation-delay:0s"></div>
+    <div class="eb off" style="animation-delay:.1s"></div>
+    <div class="eb off" style="animation-delay:.2s"></div>
+    <div class="eb off" style="animation-delay:.3s"></div>
+  </div>
+
+  <input type="range" class="vs" min="0" max="100" value="35" oninput="setVol(this.value)">
+</div>
+
+<div class="cw">
+  <button class="cb" onclick="togTh()"><i data-lucide="moon" style="width:15px;height:15px" id="thIco"></i></button>
+  <button class="cb" onclick="document.getElementById('siteWrap').scrollTo({top:0,behavior:'smooth'})"><i data-lucide="chevron-up" style="width:15px;height:15px"></i></button>
+</div>
+
+<!-- HERO -->
+<section class="min-h-screen flex flex-col items-center justify-center px-6 text-center relative overflow-hidden" id="hero">
+  <div class="cld" style="width:320px;height:50px;top:12%;animation-duration:25s"></div>
+  <div class="cld" style="width:240px;height:38px;top:42%;animation-duration:30s;animation-delay:6s"></div>
+  <div class="cld" style="width:180px;height:32px;top:70%;animation-duration:20s;animation-delay:12s"></div>
+  <div class="spk" style="top:9%;left:11%;animation-delay:0s"></div>
+  <div class="spk" style="top:19%;right:13%;animation-delay:.5s"></div>
+  <div class="spk" style="top:52%;left:7%;animation-delay:1s"></div>
+  <div class="spk" style="top:72%;right:9%;animation-delay:1.5s"></div>
+  <div class="spk" style="bottom:17%;left:21%;animation-delay:.3s"></div>
+  <div class="spk" style="bottom:31%;right:19%;animation-delay:.9s"></div>
+
+  <div class="moon-box rvs"><div class="m-halo2"></div><div class="m-halo"></div><div class="moon"></div></div>
+  <p class="mt-10 text-[10px] tracking-[.24em] uppercase font-300 rv d1" style="color:var(--text3)">Sebuah catatan di tengah malam</p>
+  <h1 class="mt-5 font-serif rv d2" style="font-size:clamp(2rem,7vw,4.5rem);font-weight:700;line-height:1.08">Selamat Tidur,<br><span class="ng" data-t="Kiyya">Kiyya</span></h1>
+  <p class="mt-6 text-[13px] max-w-md mx-auto leading-[1.9] font-300 rv d3" style="color:var(--text2)">Malam ini biar aku yang jaga mimpi kamu. Tutup mata pelan-pelan ya, semuanya akan baik-baik saja 🤍</p>
+  <div class="mt-10 rv d4">
+    <button onclick="scrollTo_(null,'msg')" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-[11px] font-500 tracking-wide transition-all duration-300 hover:gap-4" style="background:var(--card2);border:1px solid var(--border2);color:var(--text2);cursor:pointer;font-family:inherit">Baca pesanku <i data-lucide="arrow-down" style="width:12px;height:12px"></i></button>
+  </div>
+</section>
+
+<!-- MESSAGES -->
+<section class="py-28 px-6" id="msg">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-20"><div class="sl rv"></div><p class="slb rv d1">Dari hati terdalam</p><h2 class="st rv d2">Pesanku Buat Kamu</h2></div>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="gc p-6 rv d1"><div class="flex items-center gap-3 mb-4"><span class="text-lg">🌙</span><span class="text-[10px] tracking-[.16em] uppercase font-500" style="color:var(--text3)">Malam Ini</span></div><p class="text-[13px] leading-[1.9] font-300" style="color:var(--text2)">Setiap malam sebelum tidur, Kiyya, kamu itu selalu yang pertama ada di pikiran aku. Bukan karena kebiasaan — tapi karena kamu memang satu-satunya yang aku mau pikirin sebelum aku tutup mata.</p></div>
+      <div class="gc p-6 rv d2"><div class="flex items-center gap-3 mb-4"><span class="text-lg">🦋</span><span class="text-[10px] tracking-[.16em] uppercase font-500" style="color:var(--text3)">Tentang Kamu</span></div><p class="text-[13px] leading-[1.9] font-300" style="color:var(--text2)">Kamu tau nggak, Kiyya? Senyum kamu punya efek yang nggak bisa dijelaskan pakai kata-kata. Sekali kamu senyum, semua beban rasanya langsung ringan. Kamu tuh obat paling manjur buat hari yang berat.</p></div>
+      <div class="gc p-6 rv d3"><div class="flex items-center gap-3 mb-4"><span class="text-lg">💫</span><span class="text-[10px] tracking-[.16em] uppercase font-500" style="color:var(--text3)">Ketika Jauh</span></div><p class="text-[13px] leading-[1.9] font-300" style="color:var(--text2)">Walaupun kita nggak selalu bisa bareng, kamu tetap ada di setiap momen aku. Distance nggak ngurangin rasa sayang aku — malah bikin aku makin yakin sama kamu, Kiyya.</p></div>
+      <div class="gc p-6 rv d4"><div class="flex items-center gap-3 mb-4"><span class="text-lg">🤍</span><span class="text-[10px] tracking-[.16em] uppercase font-500" style="color:var(--text3)">Janji Aku</span></div><p class="text-[13px] leading-[1.9] font-300" style="color:var(--text2)">Aku mau kamu tidur dengan tenang, Kiyya. Tau kalau ada seseorang yang sayang banget sama kamu — seseorang yang nggak bakal kemana-mana. Itu aku. Selalu dan selamanya.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GOJO -->
+<section class="py-28 px-6" id="gojo">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-20"><div class="sl rv"></div><p class="slb rv d1">Spesial buat kamu</p><h2 class="st rv d2">Dari Gojo Buat <span style="color:var(--pink)">Kiyya</span></h2></div>
+    <div class="gc p-7 md:p-10 rv">
+      <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+        <div class="gojo-f flex-shrink-0" style="filter:drop-shadow(0 0 10px rgba(100,180,255,.25))">
+          <svg viewBox="0 0 120 160" width="115" height="155" fill="none">
+            <ellipse cx="60" cy="44" rx="30" ry="28" fill="#e8e8f0"/>
+            <path d="M30,38 Q24,14 34,26 L28,2 Q40,22 42,6 Q46,22 52,0 Q54,22 60,4 Q62,22 68,2 Q70,20 76,8 Q74,26 82,14 Q78,32 86,20 Q80,38 74,36" fill="#e8e8f0"/>
+            <ellipse cx="60" cy="52" rx="23" ry="21" fill="#fce4c8"/>
+            <ellipse cx="37" cy="53" rx="4.5" ry="6.5" fill="#f5d5b0"/>
+            <ellipse cx="83" cy="53" rx="4.5" ry="6.5" fill="#f5d5b0"/>
+            <rect x="35" y="45" width="50" height="11" rx="5.5" fill="#1a1a2e"/>
+            <rect x="47" y="47" width="20" height="4" rx="2" fill="rgba(255,255,255,.1)"/>
+            <ellipse cx="60" cy="58" rx="1.5" ry="1.8" fill="#e8c5a0"/>
+            <path d="M51,64 Q60,73 69,64" stroke="#c4956a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <rect x="53" y="73" width="14" height="9" rx="5" fill="#fce4c8"/>
+            <path d="M32,82 Q60,76 88,82 L92,155 L28,155 Z" fill="#1a1a2e"/>
+            <path d="M44,82 L55,96 L60,91 L65,96 L76,82" fill="#252540" stroke="#2a2a4e" stroke-width=".5"/>
+            <line x1="60" y1="91" x2="60" y2="155" stroke="#252540" stroke-width="1"/>
+            <path d="M32,86 Q20,106 24,130" stroke="#1a1a2e" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <circle cx="24" cy="130" r="6" fill="#fce4c8"/>
+            <path d="M88,86 Q100,104 96,124" stroke="#1a1a2e" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <line x1="94" y1="124" x2="88" y2="108" stroke="#fce4c8" stroke-width="3.5" stroke-linecap="round"/>
+            <line x1="98" y1="122" x2="100" y2="106" stroke="#fce4c8" stroke-width="3.5" stroke-linecap="round"/>
+            <circle cx="48" cy="50" r="3" fill="rgba(100,180,255,.12)"/>
+            <circle cx="72" cy="50" r="3" fill="rgba(100,180,255,.12)"/>
+          </svg>
+        </div>
+        <div class="text-center md:text-left">
+          <p class="text-[10px] tracking-[.18em] uppercase font-500 mb-2" style="color:var(--pink)">💫 Special Message</p>
+          <p class="font-serif text-lg md:text-xl font-500 mb-3" style="color:var(--text);line-height:1.4">"Daijōbu. Boku wa saikyō dakara."</p>
+          <p class="text-[13px] leading-[1.9] font-300 mb-3" style="color:var(--text2)">Gojo bilang dia yang terkuat — dan aku juga merasa paling kuat kalau ada kamu di sebelah aku, Kiyya. Kekuatan Gojo tuh Infinity, tapi kekuatan aku cuma satu: punya rudal 18cm.</p>
+          <p class="text-[13px] leading-[1.9] font-300" style="color:var(--text2)">Kalo Gojo bisa bikin domain expansion, aku mau bikin <em class="sig" style="color:var(--pink)">domain cinta</em> yang ngepeluk kamu setiap malam. Di domain aku, nggak ada yang bisa nyakitin kamu. 💗</p>
+          <p class="mt-3 text-[10px] tracking-[.12em]" style="color:var(--text3)">— Gojo Satoru approved 💎</p>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-3 gap-3 mt-4">
+      <div class="gc p-4 text-center rv d2"><p class="text-lg mb-1">♾️</p><p class="text-[10px] font-500" style="color:var(--text)">Infinity</p><p class="text-[9px] font-300 mt-0.5" style="color:var(--text3)">Aku mencintai mu tanpa batas</p></div>
+      <div class="gc p-4 text-center rv d3"><p class="text-lg mb-1">👁️</p><p class="text-[10px] font-500" style="color:var(--text)">Six Eyes</p><p class="text-[9px] font-300 mt-0.5" style="color:var(--text3)">Mata aku selalu tertuju padamu</p></div>
+      <div class="gc p-4 text-center rv d4"><p class="text-lg mb-1">💜</p><p class="text-[10px] font-500" style="color:var(--text)">Domain</p><p class="text-[9px] font-300 mt-0.5" style="color:var(--text3)">Kamu aman di sini sama aku</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="py-28 px-6">
+  <div class="max-w-3xl mx-auto text-center relative">
+    <div class="qm rvs" style="top:-22px;left:-4px">"</div>
+    <blockquote class="font-serif rv d1" style="font-size:clamp(1.15rem,3.5vw,2.1rem);font-weight:500;line-height:1.45;color:var(--text)">Di antara jutaan bintang di langit, kamu tetap yang paling bersinar di mataku, <span style="color:var(--pink)">Kiyya</span>.</blockquote>
+    <div class="mt-10 rv d2"><div class="orn"><div class="orn-l"></div><div class="orn-d"></div><div class="orn-l"></div></div><p class="mt-3 text-[10px] tracking-[.1em]" style="color:var(--text3)">— Dari cowok yang paling sayang sama kamu —</p></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="py-28 px-6" id="gal">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-20"><div class="sl rv"></div><p class="slb rv d1">Mabar Roblox</p><h2 class="st rv d2">With Kiyya Tersayang 💗</h2></div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="galG">
+      <div class="pc rv d1" onclick="openLB(this)"><img src="https://baguzae.github.io/kiyya/kiyya1.png" alt="" loading="lazy"><div class="pco"><p class="font-serif text-[11px] text-white">Pertama ketemu 💫</p></div></div>
+      <div class="pc rv d2" onclick="openLB(this)"><img src="https://baguzae.github.io/kiyya/kiyya2.png" alt="" loading="lazy"><div class="pco"><p class="font-serif text-[11px] text-white">Kencan pertama 🥺</p></div></div>
+      <div class="pc rv d3" onclick="openLB(this)"><img src="https://baguzae.github.io/kiyya/kiyya3.png" alt="" loading="lazy"><div class="pco"><p class="font-serif text-[11px] text-white">Tawa kamu 🎬</p></div></div>
+      <div class="pc rv d4" onclick="openLB(this)"><img src="https://baguzae.github.io/kiyya/kiyya4.png" alt="" loading="lazy"><div class="pco"><p class="font-serif text-[11px] text-white">Makan bareng 🍝</p></div></div>
+      <div class="pc rv d5" onclick="openLB(this)"><img src="https://baguzae.github.io/kiyya/kiyya5.png" alt="" loading="lazy"><div class="pco"><p class="font-serif text-[11px] text-white">Sore sempurna 🌅</p></div></div>
+      <div class="ac rv d6" onclick="document.getElementById('phIn').click()"><i data-lucide="plus" style="width:18px;height:18px;color:var(--text3)"></i><p class="mt-1 text-[8px] tracking-[.1em] uppercase" style="color:var(--text3)">Tambah foto</p></div>
+    </div>
+    <input type="file" id="phIn" accept="image/*" multiple style="display:none" onchange="addPh(this)">
+  </div>
+</section>
+
+<!-- REASONS -->
+<section class="py-28 px-6" id="why">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-20"><div class="sl rv"></div><p class="slb rv d1">Secara spesifik</p><h2 class="st rv d2">Alasan Aku Sayang <span style="color:var(--pink)">Kiyya</span></h2></div>
+    <div class="space-y-3">
+      <div class="gc p-5 flex items-start gap-4 rvl"><div class="badge">1</div><p class="text-[13px] leading-[1.85] font-300 pt-0.5" style="color:var(--text2)">Kamu selalu bisa bikin aku senyum bahkan di hari yang paling buruk. Cuma jadi diri kamu sendiri aja udah cukup.</p></div>
+      <div class="gc p-5 flex items-start gap-4 rvr d1"><div class="badge">2</div><p class="text-[13px] leading-[1.85] font-300 pt-0.5" style="color:var(--text2)">Kamu nerima aku apa adanya — lengkap dengan semua kekurangan. Nggak nyuruh berubah, tapi bikin aku pengen jadi versi terbaik.</p></div>
+      <div class="gc p-5 flex items-start gap-4 rvl d2"><div class="badge">3</div><p class="text-[13px] leading-[1.85] font-300 pt-0.5" style="color:var(--text2)">Suara kamu itu sound yang paling aku pengen denger setiap hari. Lebih enak dari lagu manapun. Suara kamu itu rumah aku.</p></div>
+      <div class="gc p-5 flex items-start gap-4 rvr d3"><div class="badge">4</div><p class="text-[13px] leading-[1.85] font-300 pt-0.5" style="color:var(--text2)">Cinta kamu bikin aku merasa aman. Kayak pelukan yang nggak pernah terlambat. Di dekat kamu, semua rasanya aman.</p></div>
+      <div class="gc p-5 flex items-start gap-4 rvl d4"><div class="badge">5</div><p class="text-[13px] leading-[1.85] font-300 pt-0.5" style="color:var(--text2)">Kamu itu alasan aku bersyukur tiap bangun tidur, dan alasan aku tidur dengan senyum setiap malam.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GOODNIGHT -->
+<section class="py-28 px-6 min-h-screen flex items-center" id="gn">
+  <div class="max-w-2xl mx-auto text-center">
+    <div class="rvs"><div class="inline-block relative"><div class="absolute inset-[-18px] rounded-full pgl"></div><span class="text-7xl md:text-8xl float" style="display:inline-block">🌙</span></div></div>
+    <h2 class="font-serif mt-10 rv d1" style="font-size:clamp(1.7rem,6vw,3.2rem);font-weight:700;line-height:1.1">Selamat Tidur,<br><span class="ng" data-t="Kiyya">Kiyya</span></h2>
+    <div class="mt-7 rv d2"><p class="text-[13px] leading-[2] font-300" style="color:var(--text2)">Malam ini tutup mata kamu pelan-pelan ya. Bayangin aku peluk kamu, bisikin <em class="sig" style="color:var(--pink)">"agh enak beyy"</em> di telinga kamu. Biar mimpi kamu indah, biar tidur kamu nyenyak.</p></div>
+    <div class="mt-4 rv d3"><p class="text-[13px] leading-[2] font-300" style="color:var(--text2)">Besok bangun dengan semangat baru. Ingat, ada cowok yang selalu doain yang terbaik buat kamu. Tanpa henti. Tanpa syarat. 🤍</p></div>
+    <div class="mt-8 rv d4"><p class="font-serif text-xl md:text-2xl font-500 sig" style="color:var(--pink)">I love you, Kiyya 💗</p></div>
+    <div class="mt-10 rv d5"><div class="inline-flex items-center gap-3 px-7 py-3 rounded-full gc"><span>💤</span><span class="font-serif text-sm sig" style="color:var(--pink)">Good Night, Kiyya</span><span>💤</span></div></div>
+    <div class="mt-8 rv d6"><div class="gojo-f inline-block" style="animation-duration:4s"><svg viewBox="0 0 70 48" width="65" height="45"><text x="6" y="26" font-size="28">😴</text><text x="34" y="16" font-size="9" opacity=".45">zzz</text><text x="46" y="8" font-size="6" opacity=".25">zzz</text></svg></div><p class="text-[9px] mt-1" style="color:var(--text3)">Gojo juga udah tidur 💤</p></div>
+    <div class="mt-6 flex justify-center gap-4 rv d7"><span class="text-lg float" style="animation-delay:0s">🌹</span><span class="text-lg float" style="animation-delay:.3s">💕</span><span class="text-lg float" style="animation-delay:.6s">✨</span><span class="text-lg float" style="animation-delay:.9s">🦋</span><span class="text-lg float" style="animation-delay:1.2s">💗</span></div>
+  </div>
+</section>
+
+<footer class="py-12 px-6 text-center" style="border-top:1px solid var(--border2)">
+  <p class="sig text-sm" style="color:var(--text2)">Dibuat dengan penuh cinta buat Kiyya 🤍</p>
+  <p class="text-[8px] mt-2 tracking-[.16em] uppercase font-500" style="color:var(--text3)">Yang paling spesial di hidupku</p>
+</footer>
+
+</div>
+</div>
+
+<script>
+// ===== CANVAS =====
+const cvs=document.getElementById('bgC'),ctx=cvs.getContext('2d');
+let W,H,isDark=true;
+function rsz(){W=cvs.width=innerWidth;H=cvs.height=innerHeight}
+rsz();addEventListener('resize',rsz);
+
+const stars=[],flies=[],hts=[],petals=[];
+for(let i=0;i<120;i++)stars.push({x:Math.random()*2e3,y:Math.random()*7e3,s:Math.random()*1.3+.3,o:Math.random(),d:(Math.random()-.5)*.018});
+for(let i=0;i<12;i++)flies.push({x:Math.random()*2e3,y:Math.random()*7e3,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,s:Math.random()*2+1.5,o:Math.random(),od:(Math.random()-.5)*.01});
+
+function drawH(x,y,sz,a){ctx.save();ctx.globalAlpha=Math.max(0,a);ctx.fillStyle=isDark?'#ff6b9d':'#e91e63';ctx.beginPath();const r=sz/16;ctx.moveTo(x,y-r*2);ctx.bezierCurveTo(x-r*5,y-r*10,x-r*15,y-r*2,x,y+r*8);ctx.moveTo(x,y-r*2);ctx.bezierCurveTo(x+r*5,y-r*10,x+r*15,y-r*2,x,y+r*8);ctx.fill();ctx.restore()}
+function drawP(x,y,s,rot,a){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.globalAlpha=Math.max(0,a);const g=ctx.createRadialGradient(0,0,0,0,0,s);g.addColorStop(0,'rgba(255,182,193,.6)');g.addColorStop(1,'rgba(255,107,157,.1)');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(0,0,s,s*.4,0,0,Math.PI*2);ctx.fill();ctx.restore()}
+
+function render(){
+  ctx.clearRect(0,0,W,H);
+  const sw=document.getElementById('siteWrap');
+  const sy=sw?sw.scrollTop:0;
+  stars.forEach(s=>{s.o+=s.d;if(s.o>1||s.o<.08)s.d*=-1;const py=((s.y-sy*.07)%H+H)%H;ctx.beginPath();ctx.arc(s.x%W,py,s.s,0,Math.PI*2);ctx.fillStyle=isDark?`rgba(255,182,193,${Math.max(0,s.o*.4)})`:`rgba(233,30,99,${Math.max(0,s.o*.08)})`;ctx.fill()});
+  flies.forEach(f=>{f.x+=f.vx;f.y+=f.vy;f.o+=f.od;if(f.o>1||f.o<.05)f.od*=-1;if(f.x<0)f.x=W;if(f.x>W)f.x=0;const fy=((f.y-sy*.04)%H+H)%H;const g=ctx.createRadialGradient(f.x%W,fy,0,f.x%W,fy,f.s*3.5);const c=isDark?'255,182,193':'200,100,140';g.addColorStop(0,`rgba(${c},${Math.max(0,f.o*.3)})`);g.addColorStop(1,`rgba(${c},0)`);ctx.beginPath();ctx.arc(f.x%W,fy,f.s*3.5,0,Math.PI*2);ctx.fillStyle=g;ctx.fill()});
+  if(Math.random()<.008)hts.push({x:Math.random()*W,y:H+20,s:Math.random()*8+4,sp:Math.random()*.6+.3,o:.25+Math.random()*.2,sw:(Math.random()-.5)*.8});
+  for(let i=hts.length-1;i>=0;i--){const h=hts[i];h.y-=h.sp;h.x+=Math.sin(h.y*.009)*h.sw;h.o-=.0008;if(h.o<=0||h.y<-30){hts.splice(i,1);continue}drawH(h.x,h.y,h.s,h.o)}
+  if(Math.random()<.01)petals.push({x:Math.random()*W,y:-10,s:Math.random()*3.5+2,rot:Math.random()*Math.PI*2,rs:(Math.random()-.5)*.012,vx:(Math.random()-.5)*.25,vy:Math.random()*.35+.15,o:.2+Math.random()*.2});
+  for(let i=petals.length-1;i>=0;i--){const p=petals[i];p.x+=p.vx+Math.sin(p.y*.006)*.2;p.y+=p.vy;p.rot+=p.rs;p.o-=.0005;if(p.o<=0||p.y>H+20){petals.splice(i,1);continue}drawP(p.x,p.y,p.s,p.rot,p.o)}
+  requestAnimationFrame(render);
+}
+render();
+
+setInterval(()=>{if(Math.random()<.3&&isDark){const s=document.createElement('div');s.className='sstar';s.style.cssText=`left:${Math.random()*W*.4}px;top:${Math.random()*H*.2}px;width:${40+Math.random()*60}px`;document.body.appendChild(s);setTimeout(()=>s.remove(),850)}},3500);
+
+// ===== PHASE 1: LOADING =====
+setTimeout(()=>{
+  document.getElementById('loadingScreen').classList.add('hide');
+},3000);
+
+// ===== PHASE 2: ENVELOPE =====
+// Particles
+(function(){const c=document.getElementById('envP');for(let i=0;i<20;i++){const p=document.createElement('div');p.className='ep';p.style.cssText=`left:${Math.random()*100}%;width:${2+Math.random()*3}px;height:${2+Math.random()*3}px;animation-duration:${5+Math.random()*6}s;animation-delay:${Math.random()*5}s;background:${Math.random()>.5?'var(--pink)':'var(--pink3)'}`;c.appendChild(p)}})();
+
+let envOpened=false;
+
+// Click handler on envelope
+document.getElementById('envSeal').addEventListener('click',function(e){
+  e.stopPropagation();
+  if(envOpened)return;
+  envOpened=true;
+  document.getElementById('envBox').classList.add('opened');
+  document.getElementById('envHint').classList.add('gone');
+  // Show letter lines one by one
+  setTimeout(()=>{
+    const lines=document.querySelectorAll('.ltr-line');
+    lines.forEach((l,i)=>{setTimeout(()=>l.classList.add('vis'),i*280)});
+    // Show continue button
+    setTimeout(()=>document.getElementById('goBtn').classList.add('vis'),lines.length*280+400);
+  },1200);
+});
+
+// Also allow clicking the envelope body
+document.getElementById('envBox').addEventListener('click',function(){
+  if(envOpened)return;
+  envOpened=true;
+  document.getElementById('envBox').classList.add('opened');
+  document.getElementById('envHint').classList.add('gone');
+  setTimeout(()=>{
+    const lines=document.querySelectorAll('.ltr-line');
+    lines.forEach((l,i)=>{setTimeout(()=>l.classList.add('vis'),i*280)});
+    setTimeout(()=>document.getElementById('goBtn').classList.add('vis'),lines.length*280+400);
+  },1200);
+});
+
+// Continue button - COMPLETELY SEPARATE from envelope
+document.getElementById('goBtn').addEventListener('click',function(){
+  document.getElementById('envScreen').classList.add('hide');
+  setTimeout(()=>{
+    document.getElementById('siteWrap').classList.add('show');
+    document.body.style.overflow='hidden';
+    initReveal();
+  },300);
+});
+
+// ===== PHASE 3: MAIN SITE =====
+function scrollTo_(e,id){
+  if(e)e.preventDefault();
+  const el=document.getElementById(id);
+  const sw=document.getElementById('siteWrap');
+  if(el&&sw)sw.scrollTo({top:el.offsetTop-60,behavior:'smooth'});
+}
+
+function initReveal(){
+  const sw=document.getElementById('siteWrap');
+  const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.08,rootMargin:'0px 0px -15px 0px',root:sw});
+  document.querySelectorAll('.rv,.rvl,.rvr,.rvs').forEach(el=>obs.observe(el));
+}
+
+// Theme
+function togTh(){
+  isDark=!isDark;
+  document.body.classList.toggle('light-mode',!isDark);
+  document.getElementById('thIco').setAttribute('data-lucide',isDark?'moon':'sun');
+  lucide.createIcons();
+}
+
+// Music
+const MUSIC_URL = "https://baguzae.github.io/valentine/porto.mp3"; // Ganti dengan link MP3 kamu
+
+let aud = new Audio(MUSIC_URL);
+aud.loop = true;
+aud.volume = 0.35;
+
+let p = false;
+
+function togM(){
+  if(p){
+    aud.pause();
+    document.querySelectorAll('.eb').forEach(b=>{
+      b.classList.add('off');
+      b.classList.remove('on');
+    });
+    document.getElementById('pbtn').innerHTML='<i data-lucide="play" style="width:13px;height:13px"></i>';
+  }else{
+    aud.play();
+    document.querySelectorAll('.eb').forEach(b=>{
+      b.classList.remove('off');
+      b.classList.add('on');
+    });
+    document.getElementById('pbtn').innerHTML='<i data-lucide="pause" style="width:13px;height:13px"></i>';
+  }
+  lucide.createIcons();
+  p=!p;
+}
+
+function setVol(v){
+  aud.volume = v/100;
+}
+
+// Lightbox
+function openLB(el){const img=el.querySelector('img');if(!img)return;document.getElementById('lbI').src=img.src;document.getElementById('lb').classList.add('on')}
+
+// Photos
+function addPh(inp){const g=document.getElementById('galG'),a=g.querySelector('.ac');Array.from(inp.files).forEach(f=>{const r=new FileReader();r.onload=e=>{const d=document.createElement('div');d.className='pc';d.onclick=function(){openLB(this)};d.innerHTML=`<img src="${e.target.result}" alt=""><div class="pco"><p class="font-serif text-[11px] text-white">Kenangan kita 💕</p></div>`;g.insertBefore(d,a)};r.readAsDataURL(f)})}
+
+// Init
+lucide.createIcons();
+</script>
+</body>
+</html>
