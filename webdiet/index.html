@@ -1,0 +1,2337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIYYA — Seven Day Diet Plan · Target 40–50kg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --color-bg-primary:#F2F2F2;
+  --color-bg-secondary:#111111;
+  --color-accent:#FF2D8F;
+  --color-text-primary:#111111;
+  --color-text-secondary:#6E6E6E;
+  --color-border:rgba(17,17,17,0.65);
+  --color-border-strong:rgba(17,17,17,0.90);
+  --color-border-light:rgba(17,17,17,0.15);
+  --ease-quiet:cubic-bezier(.22,1,.36,1);
+  --ease-precise:cubic-bezier(.4,0,.2,1);
+  --ease-emphasis:cubic-bezier(.16,1,.3,1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--color-bg-primary);
+  color:var(--color-text-primary);
+  line-height:1.5;
+  overflow-x:hidden;
+}
+::selection{background:var(--color-accent);color:#fff;}
+img{display:block;max-width:100%;}
+
+/* ========== NAV ========== */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem 2rem;
+  background:rgba(17,17,17,0.94);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  color:#fff;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.nav-logo{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:1.05rem;letter-spacing:0.02em;
+  color:#fff;
+}
+.nav-logo .dot{color:var(--color-accent);}
+.nav-menu{display:flex;gap:1.8rem;}
+.nav-menu a{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.85);text-decoration:none;
+  transition:color 300ms var(--ease-quiet);
+}
+.nav-menu a:hover{color:var(--color-accent);}
+
+/* ========== HERO ========== */
+.hero{
+  position:relative;height:100vh;width:100%;
+  background:var(--color-bg-secondary);
+  overflow:hidden;
+  perspective:1000px;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  transform-style:preserve-3d;
+}
+.grid-cell{
+  position:absolute;
+  background-repeat:no-repeat;
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+}
+.grid-cell.is-pink{background:var(--color-accent)!important;}
+.grid-cell.is-dark{background:#0a0a0a!important;}
+
+.hero::after{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(17,17,17,0.55) 0%,rgba(17,17,17,0.25) 35%,rgba(17,17,17,0.85) 100%),
+    radial-gradient(ellipse at 30% 70%,rgba(255,45,143,0.15) 0%,transparent 60%);
+  z-index:3;
+  pointer-events:none;
+}
+
+.hero-content{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:2rem;pointer-events:none;z-index:6;
+  color:#fff;
+}
+.hero-eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:0.78rem;
+  letter-spacing:0.25em;text-transform:uppercase;
+  margin-bottom:1.2rem;opacity:0;
+  color:rgba(255,255,255,0.9);
+  text-shadow:0 2px 12px rgba(0,0,0,0.5);
+}
+.hero-eyebrow .accent{color:var(--color-accent);}
+.hero-title{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:clamp(4.5rem,16vw,13rem);line-height:0.85;
+  letter-spacing:-0.04em;text-transform:uppercase;
+  opacity:0;
+  color:#fff;
+  text-shadow:0 6px 40px rgba(0,0,0,0.6),0 2px 8px rgba(0,0,0,0.4);
+}
+.hero-sub{
+  max-width:560px;font-size:0.98rem;line-height:1.6;
+  color:rgba(255,255,255,0.85);
+  margin-top:1.8rem;opacity:0;
+  text-shadow:0 2px 14px rgba(0,0,0,0.7);
+}
+.hero-meta{
+  position:absolute;top:6.5rem;right:2rem;
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.7);text-align:right;
+  opacity:0;
+  z-index:6;
+  text-shadow:0 2px 8px rgba(0,0,0,0.6);
+}
+.hero-meta span{display:block;margin-bottom:0.5rem;}
+.hero-meta b{color:var(--color-accent);font-weight:500;}
+.hero-scroll{
+  position:absolute;bottom:2rem;right:2rem;
+  font-family:'IBM Plex Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:rgba(255,255,255,0.75);
+  writing-mode:vertical-rl;
+  opacity:0;
+  z-index:6;
+  text-shadow:0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* ========== SECTION COMMON ========== */
+section{position:relative;}
+.section-pad{padding:8rem 2rem;}
+.container{max-width:1400px;margin:0 auto;}
+.container-narrow{max-width:860px;margin:0 auto;}
+
+.label{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--color-text-secondary);
+  display:inline-flex;align-items:center;gap:0.6rem;
+}
+.label::before{
+  content:'';width:24px;height:1px;background:var(--color-text-primary);
+}
+.label-light{color:rgba(255,255,255,0.6);}
+.label-light::before{background:rgba(255,255,255,0.6);}
+
+.headline{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:clamp(2.5rem,7vw,5.5rem);line-height:0.9;
+  letter-spacing:-0.03em;
+  margin-top:1.5rem;
+}
+.headline-light{color:#fff;}
+
+.fade-up{
+  opacity:0;transform:translateY(40px);
+  transition:opacity 1200ms var(--ease-quiet),transform 1200ms var(--ease-quiet);
+  will-change:transform,opacity;
+}
+.fade-up.is-in{opacity:1;transform:none;}
+
+/* ========== MANIFESTO ========== */
+.manifesto{
+  background:var(--color-bg-primary);
+  padding:8rem 2rem 6rem;
+}
+.manifesto-text{
+  font-family:'Montserrat',sans-serif;font-weight:800;
+  font-size:clamp(1.8rem,3.8vw,3rem);line-height:1.05;
+  letter-spacing:-0.02em;
+  max-width:1100px;
+}
+.manifesto-text .pink{color:var(--color-accent);}
+.manifesto-text .muted{color:var(--color-text-secondary);}
+.manifesto-footer{
+  margin-top:4rem;display:flex;justify-content:space-between;
+  align-items:flex-end;flex-wrap:wrap;gap:2rem;
+  padding-top:2rem;border-top:1px solid var(--color-border-light);
+}
+.manifesto-footer-item{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--color-text-secondary);
+}
+.manifesto-footer-item b{
+  display:block;font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:1.6rem;color:var(--color-text-primary);
+  letter-spacing:-0.02em;margin-top:0.3rem;text-transform:none;
+}
+
+/* ========== TARGET STATS ========== */
+.target-section{
+  background:var(--color-bg-secondary);color:#fff;
+  padding:8rem 2rem;
+}
+.target-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:5rem;
+  align-items:center;
+}
+.target-text .label{color:rgba(255,255,255,0.6);}
+.target-text .label::before{background:rgba(255,255,255,0.6);}
+.target-numbers{
+  display:flex;gap:3rem;margin-top:3rem;
+}
+.target-num{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:clamp(3rem,6vw,5rem);line-height:1;letter-spacing:-0.04em;
+}
+.target-num .unit{
+  font-size:0.9rem;font-family:'IBM Plex Mono',monospace;
+  font-weight:500;letter-spacing:0.15em;
+  color:rgba(255,255,255,0.5);margin-left:0.3rem;
+}
+.target-arrow{
+  font-size:2rem;color:var(--color-accent);
+  align-self:center;
+}
+.target-list{
+  margin-top:3rem;display:flex;flex-direction:column;gap:1rem;
+}
+.target-list-item{
+  display:flex;justify-content:space-between;
+  padding:1rem 0;border-bottom:1px solid rgba(255,255,255,0.1);
+  font-family:'IBM Plex Mono',monospace;font-size:0.75rem;
+  letter-spacing:0.1em;text-transform:uppercase;
+}
+.target-list-item span:last-child{color:var(--color-accent);}
+
+.target-images{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+}
+.target-img-wrap{
+  overflow:hidden;aspect-ratio:3/4;
+  background:#1a1a1a;
+}
+.target-img-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 800ms var(--ease-quiet);
+}
+.target-img-wrap:hover img{transform:scale(1.05);}
+.target-img-label{
+  font-family:'IBM Plex Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:rgba(255,255,255,0.5);margin-top:0.6rem;
+}
+
+/* ========== WEEKLY INTRO ========== */
+.weekly-intro{
+  padding:8rem 2rem 4rem;
+  text-align:center;
+}
+.weekly-intro .label{justify-content:center;}
+.weekly-days-row{
+  margin-top:4rem;display:flex;justify-content:space-between;
+  border-top:1px solid var(--color-border-light);
+  border-bottom:1px solid var(--color-border-light);
+  padding:1.5rem 0;
+  flex-wrap:wrap;gap:1rem;
+}
+.weekly-day-pill{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--color-text-secondary);
+  text-decoration:none;
+  transition:color 300ms var(--ease-quiet);
+}
+.weekly-day-pill:hover{color:var(--color-accent);}
+.weekly-day-pill.today{color:var(--color-accent);}
+
+/* ========== DAY SECTION ========== */
+.day-section{
+  padding:6rem 2rem;
+  border-top:1px solid var(--color-border-light);
+}
+.day-section.dark{
+  background:var(--color-bg-secondary);color:#fff;
+  border-top-color:rgba(255,255,255,0.1);
+}
+.day-header{
+  display:grid;grid-template-columns:auto 1fr auto;
+  gap:3rem;align-items:flex-end;
+  margin-bottom:5rem;
+}
+.day-number{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:clamp(5rem,12vw,10rem);line-height:0.85;
+  letter-spacing:-0.05em;
+  -webkit-text-stroke:2px currentColor;
+  color:transparent;
+}
+.day-section.dark .day-number{
+  -webkit-text-stroke-color:rgba(255,255,255,0.4);
+}
+.day-name-block{
+  display:flex;flex-direction:column;gap:0.8rem;
+}
+.day-name-block .label{color:var(--color-text-secondary);}
+.day-section.dark .day-name-block .label{color:rgba(255,255,255,0.6);}
+.day-section.dark .day-name-block .label::before{background:rgba(255,255,255,0.6);}
+.day-name{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:clamp(2.5rem,5vw,4rem);line-height:0.9;
+  letter-spacing:-0.03em;text-transform:uppercase;
+}
+.day-stats{
+  text-align:right;
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--color-text-secondary);
+}
+.day-section.dark .day-stats{color:rgba(255,255,255,0.6);}
+.day-stats b{
+  display:block;font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:1.8rem;color:currentColor;letter-spacing:-0.02em;
+  margin-top:0.3rem;text-transform:none;
+}
+.day-stats .accent{color:var(--color-accent);}
+
+.day-content{
+  display:grid;grid-template-columns:1.6fr 1fr;gap:4rem;
+}
+
+.meals-list{
+  display:flex;flex-direction:column;gap:2rem;
+}
+.meal-block{
+  padding:1.8rem;
+  border:1px solid var(--color-border-light);
+  background:var(--color-bg-primary);
+  transition:border-color 400ms var(--ease-quiet);
+}
+.day-section.dark .meal-block{
+  background:#1a1a1a;
+  border-color:rgba(255,255,255,0.1);
+}
+.meal-block:hover{
+  border-color:var(--color-accent);
+}
+.meal-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:1rem;gap:1rem;
+}
+.meal-time{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--color-accent);
+}
+.meal-cal{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.1em;color:var(--color-text-secondary);
+}
+.day-section.dark .meal-cal{color:rgba(255,255,255,0.5);}
+.meal-name{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:1.5rem;line-height:1.1;letter-spacing:-0.02em;
+  margin-bottom:0.6rem;
+}
+.meal-ingredients{
+  font-size:0.9rem;color:var(--color-text-secondary);
+  line-height:1.5;margin-bottom:1.2rem;
+}
+.day-section.dark .meal-ingredients{color:rgba(255,255,255,0.6);}
+.meal-benefit{
+  padding-top:1rem;border-top:1px solid var(--color-border-light);
+}
+.day-section.dark .meal-benefit{border-top-color:rgba(255,255,255,0.1);}
+.benefit-label{
+  font-family:'IBM Plex Mono',monospace;font-size:0.6rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--color-accent);margin-bottom:0.5rem;display:block;
+}
+.meal-benefit p{
+  font-size:0.85rem;line-height:1.6;color:var(--color-text-primary);
+}
+.day-section.dark .meal-benefit p{color:rgba(255,255,255,0.8);}
+
+.exercise-block{
+  padding:2rem;
+  background:var(--color-accent);color:#111;
+  position:sticky;top:6rem;align-self:start;
+}
+.exercise-label{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.exercise-name{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:2rem;line-height:0.95;letter-spacing:-0.03em;
+  text-transform:uppercase;margin-bottom:1.5rem;
+}
+.exercise-routine{
+  display:flex;flex-direction:column;gap:0.8rem;
+  margin-bottom:1.5rem;
+}
+.routine-item{
+  display:flex;justify-content:space-between;
+  padding:0.7rem 0;border-bottom:1px solid rgba(17,17,17,0.2);
+  font-family:'IBM Plex Mono',monospace;font-size:0.75rem;
+  letter-spacing:0.05em;
+}
+.routine-item span:last-child{font-weight:500;}
+.exercise-benefit{
+  padding-top:1rem;border-top:2px solid #111;
+}
+.exercise-benefit .benefit-label{color:#111;}
+.exercise-benefit p{font-size:0.85rem;line-height:1.6;}
+.exercise-tip{
+  margin-top:1.5rem;padding:0.8rem;
+  background:rgba(17,17,17,0.1);
+  font-family:'IBM Plex Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.12em;text-transform:uppercase;
+}
+
+/* ========== EXERCISE LIBRARY ========== */
+.library-section{
+  padding:8rem 2rem;background:var(--color-bg-primary);
+}
+.library-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:4rem;flex-wrap:wrap;gap:2rem;
+}
+.library-header p{
+  max-width:400px;color:var(--color-text-secondary);
+  font-size:0.95rem;line-height:1.5;
+}
+.mosaic{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  grid-auto-rows:160px;gap:0.5rem;
+  grid-auto-flow:dense;
+}
+.mosaic .tile{
+  overflow:hidden;position:relative;
+  background:#1a1a1a;
+  border:1px solid transparent;
+  transition:border-color 400ms var(--ease-quiet);
+}
+.mosaic .tile:hover{border-color:var(--color-accent);}
+.mosaic .tile img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 600ms var(--ease-quiet);
+}
+.mosaic .tile:hover img{transform:scale(1.05);}
+.mosaic .tile-text{
+  padding:1.5rem;display:flex;flex-direction:column;
+  justify-content:space-between;background:#111;color:#fff;
+}
+.mosaic .tile-text.pink{background:var(--color-accent);color:#111;}
+.mosaic .size-tall{grid-row:span 2;}
+.mosaic .size-wide{grid-column:span 2;}
+.mosaic .size-big{grid-row:span 2;grid-column:span 2;}
+.tile-num{
+  font-family:'IBM Plex Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.15em;opacity:0.6;
+}
+.tile-title{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:1.4rem;line-height:0.95;letter-spacing:-0.02em;
+  text-transform:uppercase;
+}
+.tile-desc{
+  font-size:0.8rem;line-height:1.5;opacity:0.7;margin-top:0.5rem;
+}
+.tile-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 60%);
+  padding:1.5rem;display:flex;flex-direction:column;justify-content:flex-end;
+  color:#fff;
+}
+
+/* ========== FOOD LIBRARY ========== */
+.food-section{
+  padding:8rem 2rem;background:var(--color-bg-secondary);color:#fff;
+}
+.food-section .library-header p{color:rgba(255,255,255,0.6);}
+.food-mosaic .tile{background:#1a1a1a;}
+.food-mosaic .tile-text{background:#0a0a0a;}
+.food-mosaic .tile-text.pink{background:var(--color-accent);color:#111;}
+.food-mosaic .tile-desc{color:rgba(255,255,255,0.7);}
+
+/* ========== CHECKLIST ========== */
+.checklist-section{
+  padding:8rem 2rem;background:var(--color-bg-primary);
+}
+.checklist-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+  background:var(--color-border-light);
+  margin-top:4rem;
+}
+.checklist-day{
+  background:var(--color-bg-primary);
+  padding:2rem;
+}
+.checklist-day-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:1.5rem;padding-bottom:1rem;
+  border-bottom:1px solid var(--color-border-light);
+}
+.checklist-day-name{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:1.5rem;letter-spacing:-0.02em;text-transform:uppercase;
+}
+.checklist-day-num{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.15em;color:var(--color-text-secondary);
+}
+.checklist-items{
+  display:flex;flex-direction:column;gap:0.7rem;
+}
+.check-item{
+  display:flex;align-items:center;gap:0.8rem;
+  font-size:0.85rem;cursor:pointer;
+  user-select:none;
+}
+.check-box{
+  width:16px;height:16px;border:1px solid var(--color-border);
+  flex-shrink:0;position:relative;
+  transition:all 300ms var(--ease-quiet);
+}
+.check-item input{display:none;}
+.check-item input:checked + .check-box{
+  background:var(--color-accent);border-color:var(--color-accent);
+}
+.check-item input:checked + .check-box::after{
+  content:'';position:absolute;
+  left:4px;top:1px;width:5px;height:9px;
+  border:solid #fff;border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+}
+.check-item input:checked ~ .check-text{
+  text-decoration:line-through;color:var(--color-text-secondary);
+}
+
+/* ========== CLOSING ========== */
+.closing{
+  padding:10rem 2rem;background:var(--color-bg-secondary);
+  color:#fff;text-align:center;
+}
+.closing-text{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:clamp(2.5rem,6vw,5rem);line-height:0.95;
+  letter-spacing:-0.03em;max-width:1000px;margin:0 auto;
+}
+.closing-text .pink{color:var(--color-accent);}
+.closing-sub{
+  margin-top:2rem;color:rgba(255,255,255,0.5);
+  font-size:0.95rem;max-width:500px;margin-left:auto;margin-right:auto;
+}
+.closing-badge{
+  display:inline-block;margin-top:3rem;
+  padding:0.7rem 1.5rem;border:1px solid rgba(255,255,255,0.3);
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.2em;text-transform:uppercase;
+}
+
+/* ========== FOOTER ========== */
+.footer{
+  padding:3rem 2rem;background:var(--color-bg-primary);
+  border-top:1px solid var(--color-border-light);
+}
+.footer-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;
+  align-items:center;
+}
+.footer-logo{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:1.2rem;letter-spacing:-0.02em;
+}
+.footer-meta{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--color-text-secondary);text-align:center;
+}
+.footer-back{
+  text-align:right;
+}
+.footer-back a{
+  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--color-text-primary);text-decoration:none;
+  transition:color 300ms var(--ease-quiet);
+}
+.footer-back a:hover{color:var(--color-accent);}
+
+/* ========== MUSIC PLAYER ========== */
+.music-player{
+  position:fixed;
+  bottom:1.5rem;left:1.5rem;
+  z-index:95;
+  display:flex;align-items:center;gap:0.5rem;
+  padding:0.5rem;
+  background:rgba(17,17,17,0.94);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.1);
+  color:#fff;
+  opacity:0;
+  transform:translateY(15px);
+  pointer-events:none;
+  transition:opacity 500ms var(--ease-quiet),
+             transform 500ms var(--ease-quiet),
+             padding 450ms var(--ease-quiet),
+             gap 450ms var(--ease-quiet);
+}
+.music-player.is-active{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+.music-player.is-minimized{
+  padding:0.4rem;
+  gap:0.2rem;
+}
+
+.music-toggle{
+  width:34px;height:34px;
+  border:none;
+  background:var(--color-accent);
+  color:#111;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  flex-shrink:0;
+  transition:background 250ms var(--ease-quiet),transform 150ms var(--ease-precise);
+}
+.music-toggle:hover{background:#fff;}
+.music-toggle:active{transform:scale(0.92);}
+.music-toggle svg{display:block;}
+
+/* Wrapper for collapse content */
+.music-collapse{
+  display:flex;align-items:center;gap:0.7rem;
+  max-width:300px;
+  overflow:hidden;
+  transition:max-width 450ms var(--ease-quiet),
+             opacity 350ms var(--ease-quiet),
+             margin 450ms var(--ease-quiet);
+  opacity:1;
+}
+.music-player.is-minimized .music-collapse{
+  max-width:0;
+  opacity:0;
+  pointer-events:none;
+}
+
+.music-eq{
+  display:flex;align-items:flex-end;gap:2px;
+  height:12px;margin-right:0.1rem;
+}
+.music-eq span{
+  width:2px;height:3px;
+  background:rgba(255,255,255,0.25);
+  transition:background 250ms var(--ease-quiet);
+}
+.music-player.is-playing .music-eq span{
+  background:var(--color-accent);
+  animation:eqBar 0.7s ease-in-out infinite;
+}
+.music-player.is-playing .music-eq span:nth-child(2){animation-delay:0.15s;}
+.music-player.is-playing .music-eq span:nth-child(3){animation-delay:0.35s;}
+.music-player.is-playing .music-eq span:nth-child(4){animation-delay:0.22s;}
+
+@keyframes eqBar{
+  0%,100%{height:3px;}
+  50%{height:11px;}
+}
+
+.music-info{
+  display:flex;flex-direction:column;gap:0.1rem;
+  min-width:90px;
+  white-space:nowrap;
+}
+.music-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.52rem;letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.45);
+}
+.music-track{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.68rem;color:#fff;
+  letter-spacing:0.03em;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:110px;
+}
+
+.music-volume{
+  display:flex;align-items:center;gap:0.5rem;
+  padding-left:0.7rem;
+  margin-left:0.1rem;
+  border-left:1px solid rgba(255,255,255,0.15);
+  transition:border-color 350ms var(--ease-quiet);
+}
+.music-player.is-minimized .music-volume{
+  border-left-color:transparent;
+}
+.music-volume-icon{
+  color:rgba(255,255,255,0.5);
+  flex-shrink:0;
+  display:flex;align-items:center;
+  transition:color 250ms var(--ease-quiet);
+}
+.music-volume:hover .music-volume-icon{color:var(--color-accent);}
+
+.volume-slider{
+  -webkit-appearance:none;
+  appearance:none;
+  width:60px;height:2px;
+  background:rgba(255,255,255,0.2);
+  outline:none;
+  cursor:pointer;
+  border-radius:0;
+}
+.volume-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  appearance:none;
+  width:10px;height:10px;
+  background:var(--color-accent);
+  cursor:pointer;
+  border:none;
+  border-radius:0;
+  transition:transform 150ms var(--ease-precise);
+}
+.volume-slider::-webkit-slider-thumb:hover{
+  transform:scale(1.3);
+}
+.volume-slider::-moz-range-thumb{
+  width:10px;height:10px;
+  background:var(--color-accent);
+  cursor:pointer;
+  border:none;
+  border-radius:0;
+}
+
+/* Minimize toggle button */
+.music-minimize{
+  width:24px;height:24px;
+  background:transparent;
+  border:none;
+  color:rgba(255,255,255,0.45);
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  padding:0;
+  transition:color 250ms var(--ease-quiet),background 250ms var(--ease-quiet);
+}
+.music-minimize:hover{
+  color:#fff;
+  background:rgba(255,255,255,0.08);
+}
+.music-minimize svg{display:block;}
+.music-minimize .icon-expand{display:none;}
+.music-player.is-minimized .music-minimize .icon-collapse{display:none;}
+.music-player.is-minimized .music-minimize .icon-expand{display:block;}
+
+/* Music hint toast */
+.music-hint{
+  position:fixed;
+  bottom:5.2rem;left:1.5rem;
+  z-index:94;
+  padding:0.6rem 1rem;
+  background:var(--color-accent);
+  color:#111;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.15em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  opacity:0;
+  transform:translateY(8px);
+  pointer-events:none;
+  transition:opacity 400ms var(--ease-quiet),transform 400ms var(--ease-quiet);
+}
+.music-hint.show{
+  opacity:1;
+  transform:translateY(0);
+}
+.music-hint::after{
+  content:'';
+  position:absolute;
+  bottom:-5px;left:18px;
+  width:0;height:0;
+  border-left:5px solid transparent;
+  border-right:5px solid transparent;
+  border-top:5px solid var(--color-accent);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width:900px){
+  .nav-menu{display:none;}
+  .section-pad{padding:5rem 1.5rem;}
+  .day-section{padding:4rem 1.5rem;}
+  .day-header{grid-template-columns:1fr;gap:1.5rem;}
+  .day-stats{text-align:left;}
+  .day-content{grid-template-columns:1fr;gap:2rem;}
+  .exercise-block{position:static;top:auto;}
+  .target-grid{grid-template-columns:1fr;gap:3rem;}
+  .mosaic{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px;}
+  .mosaic .size-big{grid-row:span 1;grid-column:span 2;}
+  .mosaic .size-tall{grid-row:span 1;}
+  .checklist-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr;text-align:center;}
+  .footer-back{text-align:center;}
+  .hero-meta{display:none;}
+  .target-numbers{flex-wrap:wrap;}
+  .weekly-days-row{justify-content:center;}
+
+  .music-player{
+    bottom:1rem;left:1rem;
+    padding:0.4rem;
+    gap:0.3rem;
+  }
+  .music-toggle{width:30px;height:30px;}
+  .music-info{display:none;}
+  .music-volume{padding-left:0.5rem;}
+  .volume-slider{width:45px;}
+  .music-hint{bottom:4rem;left:1rem;font-size:0.55rem;padding:0.5rem 0.8rem;}
+
+  /* On mobile, default to minimized-friendly layout */
+  .music-collapse{max-width:200px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms!important;
+    transition-duration:0.01ms!important;
+  }
+  .grid-cell{transform:none!important;opacity:1!important;}
+  .hero-eyebrow,.hero-title,.hero-sub,.hero-meta,.hero-scroll{opacity:1!important;}
+  .music-player{opacity:1!important;transform:none!important;pointer-events:auto!important;}
+  .music-eq span{animation:none!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ==============================================
+     MUSIC — Ganti src di bawah ini dengan URL musik Anda
+     Format: link langsung ke file .mp3 / .ogg / .wav
+     ============================================== -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="https://baguzae.github.io/webdiet/bgzdiet.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ========== MUSIC PLAYER WIDGET ========== -->
+<div class="music-player" id="musicPlayer">
+  <button class="music-toggle" id="musicToggle" aria-label="Play/Pause music">
+    <svg class="icon-play" viewBox="0 0 24 24" width="13" height="13"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+    <svg class="icon-pause" viewBox="0 0 24 24" width="13" height="13" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z" fill="currentColor"/></svg>
+  </button>
+  <div class="music-collapse">
+    <div class="music-eq" id="musicEq">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="music-info">
+      <span class="music-label">Now Playing</span>
+      <span class="music-track" id="musicTrack">♪ BGZ x Kiyya's ♪</span>
+    </div>
+    <div class="music-volume">
+      <span class="music-volume-icon">
+        <svg viewBox="0 0 24 24" width="13" height="13"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" fill="currentColor"/></svg>
+      </span>
+      <input type="range" id="volumeSlider" min="0" max="100" value="35" class="volume-slider" aria-label="Volume">
+    </div>
+  </div>
+  <button class="music-minimize" id="musicMinimize" aria-label="Minimize music player">
+    <svg class="icon-collapse" viewBox="0 0 24 24" width="11" height="11">
+      <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" fill="currentColor"/>
+    </svg>
+    <svg class="icon-expand" viewBox="0 0 24 24" width="11" height="11">
+      <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" fill="currentColor"/>
+    </svg>
+  </button>
+</div>
+
+<!-- ========== NAV ========== -->
+<nav class="nav">
+  <div class="nav-logo">KIYYA<span class="dot">.</span>DIET PLAN</div>
+  <div class="nav-menu">
+    <a href="#manifesto">Manifesto</a>
+    <a href="#target">Target</a>
+    <a href="#schedule">Jadwal</a>
+    <a href="#exercise">Olahraga</a>
+    <a href="#food">Bahan</a>
+  </div>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero" id="hero">
+  <div class="hero-grid" id="heroGrid"></div>
+  <div class="hero-meta" id="heroMeta">
+    <span>WEEKLY PLAN · 2026</span>
+    <span>TARGET <b>40–50 KG</b></span>
+    <span>7 DAYS · 5 MEALS/DAY</span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow" id="heroEyebrow">Seven Day Diet Plan dari Baguzae · <span class="accent">For Kiyya 💗</span></div>
+    <h1 class="hero-title" id="heroTitle">KIYYA</h1>
+    <p class="hero-sub" id="heroSub">Tujuh hari menu sehat, gerakan pemula yang lembut, dan satu tujuan yang tenang — mencapai berat badan 40 hingga 50 kilogram tanpa kebisingan, tanpa dramatik. Hanya konsistensi yang diukur dengan sendok dan langkah.</p>
+  </div>
+  <div class="hero-scroll" id="heroScroll">Scroll ↓</div>
+</section>
+
+<!-- ========== MANIFESTO ========== -->
+<section class="manifesto" id="manifesto">
+  <div class="container">
+    <div class="label fade-up">001 / Manifesto</div>
+    <p class="manifesto-text fade-up">
+      Ini bukan diet keras. Ini <span class="pink">cara makan yang lebih sopan</span> — porsi kecil, lima kali sehari, bahan yang dikenali, gerakan yang tidak menyakiti. <span class="muted">Target 40-50kg bukan angka yang diraih dalam seminggu, tapi arah yang dituju setiap hari.</span>
+    </p>
+    <div class="manifesto-footer">
+      <div class="manifesto-footer-item fade-up">
+        Durasi
+        <b>7 Hari · Berulang</b>
+      </div>
+      <div class="manifesto-footer-item fade-up">
+        Kalori Harian
+        <b>1,150 – 1,250 kkal</b>
+      </div>
+      <div class="manifesto-footer-item fade-up">
+        Olahraga
+        <b>Pemula · 15-30 menit</b>
+      </div>
+      <div class="manifesto-footer-item fade-up">
+        Target BB
+        <b style="color:var(--color-accent)">40 – 50 kg</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TARGET STATS ========== -->
+<section class="target-section" id="target">
+  <div class="container">
+    <div class="target-grid">
+      <div class="target-text">
+        <div class="label label-light fade-up">002 / Target</div>
+        <h2 class="headline headline-light fade-up">Berat badan<br>bukan musuh.</h2>
+        <div class="target-numbers">
+          <div class="target-num fade-up">55<span class="unit">KG<br>AWAL</span></div>
+          <div class="target-arrow fade-up">→</div>
+          <div class="target-num fade-up" style="color:var(--color-accent)">45<span class="unit">KG<br>TARGET</span></div>
+        </div>
+        <div class="target-list">
+          <div class="target-list-item fade-up"><span>Penurunan mingguan sehat</span><span>0.5 – 1.0 kg</span></div>
+          <div class="target-list-item fade-up"><span>Defisit kalori harian</span><span>300 – 500 kkal</span></div>
+          <div class="target-list-item fade-up"><span>Protein harian</span><span>80 – 90 g</span></div>
+          <div class="target-list-item fade-up"><span>Asupan air</span><span>2.0 – 2.5 L</span></div>
+          <div class="target-list-item fade-up"><span>Tidur malam</span><span>7 – 8 jam</span></div>
+        </div>
+      </div>
+      <div class="target-images">
+        <div class="target-img-wrap media fade-up">
+          <img src="https://picsum.photos/seed/kiyya-portrait-a/600/800" alt="Portrait">
+          <div class="target-img-label">SEBELUM · 55KG</div>
+        </div>
+        <div class="target-img-wrap media fade-up" style="margin-top:3rem;">
+          <img src="https://picsum.photos/seed/kiyya-portrait-b/600/800" alt="Portrait">
+          <div class="target-img-label">TARGET · 45KG</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== WEEKLY INTRO ========== -->
+<section class="weekly-intro" id="schedule">
+  <div class="container">
+    <div class="label fade-up">003 / Jadwal Mingguan</div>
+    <h2 class="headline fade-up">Tujuh hari,<br>satu ritme.</h2>
+    <div class="weekly-days-row fade-up">
+      <a href="#day-mon" class="weekly-day-pill">01 · Sen</a>
+      <a href="#day-tue" class="weekly-day-pill">02 · Sel</a>
+      <a href="#day-wed" class="weekly-day-pill">03 · Rab</a>
+      <a href="#day-thu" class="weekly-day-pill">04 · Kam</a>
+      <a href="#day-fri" class="weekly-day-pill">05 · Jum</a>
+      <a href="#day-sat" class="weekly-day-pill">06 · Sab</a>
+      <a href="#day-sun" class="weekly-day-pill">07 · Min</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DAY 1 - SENIN ========== -->
+<section class="day-section" id="day-mon">
+  <div class="container">
+    <div class="day-header">
+      <div class="day-number fade-up">01</div>
+      <div class="day-name-block">
+        <div class="label fade-up">Senin · Hari Pertama</div>
+        <div class="day-name fade-up">SENIN</div>
+      </div>
+      <div class="day-stats fade-up">
+        Target Kalori
+        <b class="accent">1,200 kkal</b>
+      </div>
+    </div>
+
+    <div class="day-content">
+      <div class="meals-list">
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Sarapan · 07:00</span>
+            <span class="meal-cal">320 kkal</span>
+          </div>
+          <div class="meal-name">Oatmeal Pisang & Chia</div>
+          <div class="meal-ingredients">Oatmeal 40g · pisang 1 buah · chia seeds 1 sdm · madu 1 sct · susu almond 150ml</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Serat larut beta-glucan dari oat menjaga kenyang hingga 4 jam dan menurunkan kolesterol jahat. Pisang memberi kalium untuk fungsi otot, chia seeds sumber omega-3 dan protein nabati yang mendukung metabolisme lemak.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Pagi · 10:00</span>
+            <span class="meal-cal">140 kkal</span>
+          </div>
+          <div class="meal-name">Greek Yogurt + Strawberry</div>
+          <div class="meal-ingredients">Greek yogurt plain 100g · strawberry 5 buah segar</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Probiotik dalam Greek yogurt menjaga kesehatan pencernaan dan penyerapan nutrisi. Protein whey dan kaseinnya membantu menjaga massa otot selama defisit kalori. Strawberry kaya vitamin C dan antioksidan ellagic acid.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Siang · 13:00</span>
+            <span class="meal-cal">380 kkal</span>
+          </div>
+          <div class="meal-name">Brown Rice + Ayam Bakar + Capcay</div>
+          <div class="meal-ingredients">Brown rice 100g · dada ayam 80g · capcay (sawi, wortel, jamur, jagung muda)</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Brown rice mengandung serat dan magnesium yang membantu regulasi gula darah. Dada ayam sumber protein rendah lemak untuk menjaga massa otot. Capcay memberi vitamin A, C, K serta serat untuk pencernaan dan detoksifikasi hati.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Sore · 16:00</span>
+            <span class="meal-cal">180 kkal</span>
+          </div>
+          <div class="meal-name">Edamame Rebus</div>
+          <div class="meal-ingredients">Edamame 100g · garam laut sejumput</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Edamame adalah kedelai muda yang kaya protein nabati lengkap (9 asam amino esensial). Mengandung folat untuk energi, zat besi untuk oksigenasi darah, dan isoflavon yang mendukung keseimbangan hormon.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Malam · 19:00</span>
+            <span class="meal-cal">180 kkal</span>
+          </div>
+          <div class="meal-name">Ikan Kukus + Sayuran Panggang</div>
+          <div class="meal-ingredients">Ikan kakap 100g · brokoli · wortel · zucchini · perasan lemon</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Ikan kakap kaya omega-3 EPA dan DHA untuk kesehatan jantung dan fungsi kognitif. Brokoli mengandung sulforaphane yang mendukung detoksifikasi sel. Dikukus dan dipanggang tanpa minyak berlebih menjaga kalori tetap rendah.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="exercise-block fade-up">
+        <div class="exercise-label">Olahraga · 17:00</div>
+        <div class="exercise-name">Walking + Stretch</div>
+        <div class="exercise-routine">
+          <div class="routine-item"><span>Brisk Walking</span><span>20 menit</span></div>
+          <div class="routine-item"><span>Dynamic Stretch</span><span>5 menit</span></div>
+          <div class="routine-item"><span>Static Stretch</span><span>5 menit</span></div>
+        </div>
+        <div class="exercise-benefit">
+          <span class="benefit-label">Manfaat Gerakan</span>
+          <p>Walking membakar kalori tanpa stress pada sendi — cocok untuk pemula. Stretching meningkatkan fleksibilitas, mengurangi risiko cedera, dan merileksasi sistem saraf setelah hari pertama diet.</p>
+        </div>
+        <div class="exercise-tip">Tip · Mulai pelan, jangan kejar detak nadi maksimal di minggu pertama</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DAY 2 - SELASA ========== -->
+<section class="day-section dark" id="day-tue">
+  <div class="container">
+    <div class="day-header">
+      <div class="day-number fade-up">02</div>
+      <div class="day-name-block">
+        <div class="label fade-up">Selasa · Hari Kedua</div>
+        <div class="day-name fade-up">SELASA</div>
+      </div>
+      <div class="day-stats fade-up">
+        Target Kalori
+        <b class="accent">1,180 kkal</b>
+      </div>
+    </div>
+
+    <div class="day-content">
+      <div class="meals-list">
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Sarapan · 07:00</span>
+            <span class="meal-cal">290 kkal</span>
+          </div>
+          <div class="meal-name">Telur Orak-arik Bayam + Roti Gandum</div>
+          <div class="meal-ingredients">Telur 2 butir · bayam segar segenggam · roti gandum 1 lembar · sedikit olive oil</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Telur adalah protein lengkap dengan 9 asam amino esensial, kolin untuk otak, dan lutein untuk mata. Bayam kaya zat besi yang membantu transpor oksigen ke otot selama olahraga. Roti gandum memberi serat untuk kenyang tahan lama.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Pagi · 10:00</span>
+            <span class="meal-cal">160 kkal</span>
+          </div>
+          <div class="meal-name">Apel + Peanut Butter</div>
+          <div class="meal-ingredients">Apel 1 buah · peanut butter natural 1 sdm</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Pektin dalam apel mendukung pertumbuhan bakteri baik usus. Peanut butter natural (tanpa gula tambahan) memberi lemak tak jenuh tunggal dan protein yang menjaga gula darah stabil.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Siang · 13:00</span>
+            <span class="meal-cal">370 kkal</span>
+          </div>
+          <div class="meal-name">Quinoa Bowl dengan Ayam & Sayuran</div>
+          <div class="meal-ingredients">Quinoa 80g · dada ayam 80g · tomat · mentimun · alpukat 1/4 · perasan lemon</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Quinoa adalah biji-bijian lengkap yang mengandung semua asam amino esensial — jarang ditemukan di sumber nabati. Alpukat memberi lemak sehat untuk penyerapan vitamin larut lemak (A, D, E, K).</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Sore · 16:00</span>
+            <span class="meal-cal">100 kkal</span>
+          </div>
+          <div class="meal-name">Almond Sangrai</div>
+          <div class="meal-ingredients">Almond 15 butir · tanpa garam tambahan</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Almond kaya vitamin E yang melindungi sel dari stres oksidatif, magnesium untuk fungsi saraf dan otot, serta lemak tak jenuh yang menjaga kesehatan jantung.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Malam · 19:00</span>
+            <span class="meal-cal">260 kkal</span>
+          </div>
+          <div class="meal-name">Sup Sayur Ayam Bening</div>
+          <div class="meal-ingredients">Ayam 60g · wortel · bayam · buncis · jagung muda · kaldu bening</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Sup bening rendah kalori tapi tinggi hidrasi dan elektrolit. Sayuran memberi serat dan vitamin, kaldu ayam mengandung kolagen yang mendukung kesehatan sendi dan pencernaan.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="exercise-block fade-up">
+        <div class="exercise-label">Olahraga · 17:00</div>
+        <div class="exercise-name">Yoga Flow</div>
+        <div class="exercise-routine">
+          <div class="routine-item"><span>Sun Salutation A</span><span>5 putaran</span></div>
+          <div class="routine-item"><span>Warrior I & II</span><span>3x sisi</span></div>
+          <div class="routine-item"><span>Downward Dog</span><span>5 napas</span></div>
+          <div class="routine-item"><span>Child's Pose</span><span>1 menit</span></div>
+        </div>
+        <div class="exercise-benefit">
+          <span class="benefit-label">Manfaat Gerakan</span>
+          <p>Yoga meningkatkan fleksibilitas, keseimbangan, dan kesadaran tubuh. Pose warrior membangun kekuatan kaki dan core, sementara pernapasan dalam mengaktifkan sistem saraf parasimpatik untuk relaksasi.</p>
+        </div>
+        <div class="exercise-tip">Tip · Fokus pada pernapasan, bukan kelenturan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DAY 3 - RABU ========== -->
+<section class="day-section" id="day-wed">
+  <div class="container">
+    <div class="day-header">
+      <div class="day-number fade-up">03</div>
+      <div class="day-name-block">
+        <div class="label fade-up">Rabu · Hari Ketiga</div>
+        <div class="day-name fade-up">RABU</div>
+      </div>
+      <div class="day-stats fade-up">
+        Target Kalori
+        <b class="accent">1,220 kkal</b>
+      </div>
+    </div>
+
+    <div class="day-content">
+      <div class="meals-list">
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Sarapan · 07:00</span>
+            <span class="meal-cal">310 kkal</span>
+          </div>
+          <div class="meal-name">Smoothie Bowl Pisang-Bayam</div>
+          <div class="meal-ingredients">Pisang 1 · bayam segenggam · protein powder 1 scoop · susu almond · topping granola 2 sdm</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Bayam kaya zat besi dan klorofil yang mendukung oksigenasi darah. Pisang memberi karbohidrat cepat untuk energi pagi. Protein powder mendukung pemulihan otot setelah olahraga keesokan harinya.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Pagi · 10:00</span>
+            <span class="meal-cal">150 kkal</span>
+          </div>
+          <div class="meal-name">Mixed Nuts</div>
+          <div class="meal-ingredients">Walnut 5 · almond 10 · cashew 5 · tanpa garam</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Walnut adalah sumber omega-3 nabati terbaik untuk kesehatan otak. Kombinasi kacang memberi magnesium, selenium, dan lemak sehat yang menjaga kenyang dan stabilkan gula darah.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Siang · 13:00</span>
+            <span class="meal-cal">400 kkal</span>
+          </div>
+          <div class="meal-name">Sweet Potato + Ayam Panggang + Brokoli</div>
+          <div class="meal-ingredients">Ubi jalar 150g · dada ayam 80g · brokoli kukus · perasan lemon</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Ubi jalar adalah karbohidrat kompleks dengan indeks glikemik rendah, kaya beta-karoten (vitamin A) untuk kesehatan mata dan kulit. Brokoli mengandung sulforaphane yang mendukung detoksifikasi dan memiliki efek anti-inflamasi.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Sore · 16:00</span>
+            <span class="meal-cal">120 kkal</span>
+          </div>
+          <div class="meal-name">Greek Yogurt + Madu</div>
+          <div class="meal-ingredients">Greek yogurt 100g · madu raw 1 sdt</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Probiotik dalam yogurt mendukung mikrobiom usus yang sehat, penting untuk penyerapan nutrisi dan mood. Madu raw mengandung enzim alami dan antimikroba.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Malam · 19:00</span>
+            <span class="meal-cal">240 kkal</span>
+          </div>
+          <div class="meal-name">Tumis Tahu dengan Sayuran</div>
+          <div class="meal-ingredients">Tahu 100g · sawi hijau · jamur · bawang putih · sedikit minyak wijen</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Tahu adalah protein nabati lengkap dengan kalsium untuk tulang. Jamur mengandung beta-glucan untuk imunitas. Bawang putih memiliki sifat antibakteri dan mendukung kesehatan kardiovaskular.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="exercise-block fade-up">
+        <div class="exercise-label">Olahraga · 17:00</div>
+        <div class="exercise-name">Bodyweight Strength</div>
+        <div class="exercise-routine">
+          <div class="routine-item"><span>Bodyweight Squat</span><span>3 × 10 reps</span></div>
+          <div class="routine-item"><span>Reverse Lunge</span><span>3 × 8/sisi</span></div>
+          <div class="routine-item"><span>Glute Bridge</span><span>3 × 12 reps</span></div>
+          <div class="routine-item"><span>Plank Hold</span><span>3 × 20 dtk</span></div>
+          <div class="routine-item"><span>Rest antar set</span><span>45 dtk</span></div>
+        </div>
+        <div class="exercise-benefit">
+          <span class="benefit-label">Manfaat Gerakan</span>
+          <p>Squat dan lunge membangun kekuatan kaki dan glute — otot terbesar dalam tubuh yang membakar paling banyak kalori saat istirahat. Glute bridge mengaktifkan otot pantat yang sering melemah akibat duduk. Plank membangun core tanpa flexi tulang belakang.</p>
+        </div>
+        <div class="exercise-tip">Tip · Kualitas gerakan > jumlah repetisi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DAY 4 - KAMIS ========== -->
+<section class="day-section dark" id="day-thu">
+  <div class="container">
+    <div class="day-header">
+      <div class="day-number fade-up">04</div>
+      <div class="day-name-block">
+        <div class="label fade-up">Kamis · Hari Keempat</div>
+        <div class="day-name fade-up">KAMIS</div>
+      </div>
+      <div class="day-stats fade-up">
+        Target Kalori
+        <b class="accent">1,190 kkal</b>
+      </div>
+    </div>
+
+    <div class="day-content">
+      <div class="meals-list">
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Sarapan · 07:00</span>
+            <span class="meal-cal">330 kkal</span>
+          </div>
+          <div class="meal-name">Avocado Toast dengan Telur</div>
+          <div class="meal-ingredients">Roti gandum 1 lembar · alpukat 1/2 · telur orak-arik 1 butir · chili flakes</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Alpukat kaya lemak tak jenuh tunggal yang menurunkan kolesterol LDL dan meningkatkan HDL. Kombinasi dengan telur memberi protein dan lemak sehat yang menjaga kenyang hingga 5 jam.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Pagi · 10:00</span>
+            <span class="meal-cal">60 kkal</span>
+          </div>
+          <div class="meal-name">Pepaya Segar</div>
+          <div class="meal-ingredients">Pepaya matang 150g · perasan jeruk nipis</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Pepaya mengandung enzim papain yang membantu pencernaan protein dan mengurangi kembung. Beta-karoten dan vitamin C mendukung kesehatan kulit dan imunitas.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Siang · 13:00</span>
+            <span class="meal-cal">390 kkal</span>
+          </div>
+          <div class="meal-name">Brown Rice + Ikan Bakar + Sayur Bening</div>
+          <div class="meal-ingredients">Brown rice 100g · ikan nila 80g · kangkung · jagung · labu siam</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Ikan nila sumber protein rendah kalori dan rendah merkuri. Sayur bening memberi hidrasi dan serat tanpa kalori berlebih. Brown rice memberi energi tahan lama untuk aktivitas sore.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Sore · 16:00</span>
+            <span class="meal-cal">70 kkal</span>
+          </div>
+          <div class="meal-name">Telur Rebus</div>
+          <div class="meal-ingredients">Telur rebus 1 butir · garam sejumput</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Telur rebus adalah snack protein sempurna — 6g protein hanya 70 kalori. Kolin dalam kuning telur mendukung fungsi hati dan otak, lutein untuk kesehatan mata.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Malam · 19:00</span>
+            <span class="meal-cal">340 kkal</span>
+          </div>
+          <div class="meal-name">Salad Ayam Panggang</div>
+          <div class="meal-ingredients">Ayam 60g · selada · tomat · mentimun · wortel parut · dressing olive oil + lemon</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Sayuran mentah memberi enzim alami yang hilang saat dimasak. Olive oil extra virgin mengandung polifenol dan lemak tak jenuh tunggal. Perasan lemon meningkatkan penyerapan zat besi dari sayuran.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="exercise-block fade-up">
+        <div class="exercise-label">Olahraga · 17:00</div>
+        <div class="exercise-name">Pilates</div>
+        <div class="exercise-routine">
+          <div class="routine-item"><span>The Hundred</span><span>1 × 100 hit</span></div>
+          <div class="routine-item"><span>Roll Up</span><span>3 × 6 reps</span></div>
+          <div class="routine-item"><span>Single Leg Stretch</span><span>3 × 8/sisi</span></div>
+          <div class="routine-item"><span>Swan Dive</span><span>3 × 6 reps</span></div>
+          <div class="routine-item"><span>Cool Down</span><span>3 menit</span></div>
+        </div>
+        <div class="exercise-benefit">
+          <span class="benefit-label">Manfaat Gerakan</span>
+          <p>Pilates fokus pada kekuatan core, postur, dan kesadaran tubuh. Latihan ini memperbaiki alignment tulang belakang, mengurangi nyeri punggung, dan membangun otot dalam (deep stabilizer) yang jarang terlatih di olahraga kardio.</p>
+        </div>
+        <div class="exercise-tip">Tip · Aktivasi core sebelum bergerak, bukan sekadar mengangkat</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DAY 5 - JUMAT ========== -->
+<section class="day-section" id="day-fri">
+  <div class="container">
+    <div class="day-header">
+      <div class="day-number fade-up">05</div>
+      <div class="day-name-block">
+        <div class="label fade-up">Jumat · Hari Kelima</div>
+        <div class="day-name fade-up">JUMAT</div>
+      </div>
+      <div class="day-stats fade-up">
+        Target Kalori
+        <b class="accent">1,210 kkal</b>
+      </div>
+    </div>
+
+    <div class="day-content">
+      <div class="meals-list">
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Sarapan · 07:00</span>
+            <span class="meal-cal">300 kkal</span>
+          </div>
+          <div class="meal-name">Overnight Oats dengan Beri</div>
+          <div class="meal-ingredients">Oat 40g · susu almond · chia seeds 1 sdm · blueberry · strawberry</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Overnight oats mempertahankan serat larut yang baik untuk mikrobiom usus. Blueberry adalah salah satu buah dengan kandungan antioksidan tertinggi — anthocyanin yang mendukung kesehatan otak dan kulit.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Pagi · 10:00</span>
+            <span class="meal-cal">70 kkal</span>
+          </div>
+          <div class="meal-name">Telur Rebus</div>
+          <div class="meal-ingredients">Telur rebus 1 butir</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Protein cepat saji yang menjaga kenyang dan stabilkan gula darah. Mengandung vitamin B12 untuk energi dan selenium untuk imunitas.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Siang · 13:00</span>
+            <span class="meal-cal">400 kkal</span>
+          </div>
+          <div class="meal-name">Quinoa Bowl dengan Ayam & Paprika</div>
+          <div class="meal-ingredients">Quinoa 80g · ayam 80g · paprika merah · zucchini · bawang bombay</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Paprika merah kaya vitamin C (lebih dari jeruk) yang membantu penyerapan zat besi dari quinoa. Zucchini rendah kalori tapi tinggi serat dan air untuk hidrasi.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Sore · 16:00</span>
+            <span class="meal-cal">100 kkal</span>
+          </div>
+          <div class="meal-name">Greek Yogurt Plain</div>
+          <div class="meal-ingredients">Greek yogurt 100g</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Probiotik dan protein kasein yang dilepaskan secara perlahan — baik untuk pemulihan otot dan menjaga kenyang hingga makan malam.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Malam · 19:00</span>
+            <span class="meal-cal">340 kkal</span>
+          </div>
+          <div class="meal-name">Tahu Kukus + Capcay</div>
+          <div class="meal-ingredients">Tahu 100g · sawi · wortel · jamur · brokoli · bawang putih · kecap asin 1 sdt</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Tahu kukus mempertahankan kandungan isoflavon yang mendukung kesehatan jantung dan keseimbangan hormon. Capcay memberi variasi sayuran untuk mikronutrien yang beragam.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="exercise-block fade-up">
+        <div class="exercise-label">Olahraga · 17:00</div>
+        <div class="exercise-name">Dance Cardio</div>
+        <div class="exercise-routine">
+          <div class="routine-item"><span>Warm Up</span><span>3 menit</span></div>
+          <div class="routine-item"><span>Basic Zumba Step</span><span>8 menit</span></div>
+          <div class="routine-item"><span>Freestyle Dance</span><span>4 menit</span></div>
+          <div class="routine-item"><span>Cool Down</span><span>3 menit</span></div>
+        </div>
+        <div class="exercise-benefit">
+          <span class="benefit-label">Manfaat Gerakan</span>
+          <p>Dance cardio membakar kalori sambil meningkatkan koordinasi dan mood. Gerakan ritmis melepaskan endorfin yang mengurangi stres dan craving. Cocok untuk hari Jumat yang butuh energi positif menjelang akhir pekan.</p>
+        </div>
+        <div class="exercise-tip">Tip · Pakai musik favorit, tidak ada gerakan yang salah</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DAY 6 - SABTU ========== -->
+<section class="day-section dark" id="day-sat">
+  <div class="container">
+    <div class="day-header">
+      <div class="day-number fade-up">06</div>
+      <div class="day-name-block">
+        <div class="label fade-up">Sabtu · Hari Keenam</div>
+        <div class="day-name fade-up">SABTU</div>
+      </div>
+      <div class="day-stats fade-up">
+        Target Kalori
+        <b class="accent">1,250 kkal</b>
+      </div>
+    </div>
+
+    <div class="day-content">
+      <div class="meals-list">
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Sarapan · 08:00</span>
+            <span class="meal-cal">320 kkal</span>
+          </div>
+          <div class="meal-name">Smoothie Pisang-Bayam-Protein</div>
+          <div class="meal-ingredients">Pisang 1 · bayam segenggam · protein powder 1 scoop · susu almond 200ml</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Kombinasi protein dan sayuran hijau yang mudah diserap. Bayam memberi zat besi dan vitamin K untuk pembekuan darah dan kesehatan tulang. Pisang memberi kalium yang mencegah kram otot.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Pagi · 10:30</span>
+            <span class="meal-cal">90 kkal</span>
+          </div>
+          <div class="meal-name">Buah Segar Campur</div>
+          <div class="meal-ingredients">Semangka · melon · pepaya 200g total</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Buah-buahan ini memiliki kandungan air tinggi (90%+) yang membantu hidrasi. Semangka mengandung citrulline yang meningkatkan aliran darah, melon kaya beta-karoten, pepaya enzim pencernaan.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Siang · 13:00</span>
+            <span class="meal-cal">420 kkal</span>
+          </div>
+          <div class="meal-name">Brown Rice + Ayam Bakar + Urap</div>
+          <div class="meal-ingredients">Brown rice 100g · ayam 80g · urap (kangkung, tauge, kelapa parut muda)</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Urap adalah cara tradisional menikmati sayuran dengan kelapa yang memberi lemak sehat rantai sedang (MCT) — cepat diubah jadi energi. Tauge kaya vitamin C dan enzim pencernaan.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Sore · 16:00</span>
+            <span class="meal-cal">180 kkal</span>
+          </div>
+          <div class="meal-name">Edamame Rebus</div>
+          <div class="meal-ingredients">Edamame 100g · garam laut sejumput</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Protein nabati lengkap dengan serat tinggi yang menjaga gula darah stabil. Isoflavon dalam kedelai mendukung kesehatan tulang dan jantung.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Malam · 19:00</span>
+            <span class="meal-cal">240 kkal</span>
+          </div>
+          <div class="meal-name">Ikan Bakar + Tumis Sayur</div>
+          <div class="meal-ingredients">Ikan 100g · sawi hijau · jamur · bawang putih · sedikit minyak wijen</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Ikan bakar memberi omega-3 tanpa kalori berlebih. Sawi hijau kaya kalsium dan vitamin K. Minyak wijen mengandung sesamin yang mendukung metabolisme lemak.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="exercise-block fade-up">
+        <div class="exercise-label">Olahraga · 07:00</div>
+        <div class="exercise-name">Outdoor Walk + Stretch</div>
+        <div class="exercise-routine">
+          <div class="routine-item"><span>Outdoor Brisk Walk</span><span>30 menit</span></div>
+          <div class="routine-item"><span>Dynamic Stretch</span><span>5 menit</span></div>
+          <div class="routine-item"><span>Static Stretch</span><span>5 menit</span></div>
+          <div class="routine-item"><span>Breathing Exercise</span><span>3 menit</span></div>
+        </div>
+        <div class="exercise-benefit">
+          <span class="benefit-label">Manfaat Gerakan</span>
+          <p>Berjalan di luar ruangan memberi sinar matahari pagi yang membantu produksi vitamin D dan regulasi sirkadian untuk tidur lebih baik. Kombinasi walking dan stretching ideal untuk recovery aktif di akhir pekan.</p>
+        </div>
+        <div class="exercise-tip">Tip · Jalan pagi sebelum sarapan = pembakaran lemak optimal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== DAY 7 - MINGGU ========== -->
+<section class="day-section" id="day-sun">
+  <div class="container">
+    <div class="day-header">
+      <div class="day-number fade-up">07</div>
+      <div class="day-name-block">
+        <div class="label fade-up">Minggu · Hari Ketujuh</div>
+        <div class="day-name fade-up">MINGGU</div>
+      </div>
+      <div class="day-stats fade-up">
+        Target Kalori
+        <b class="accent">1,150 kkal</b>
+      </div>
+    </div>
+
+    <div class="day-content">
+      <div class="meals-list">
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Sarapan · 08:00</span>
+            <span class="meal-cal">280 kkal</span>
+          </div>
+          <div class="meal-name">Pancake Pisang (Tanpa Tepung)</div>
+          <div class="meal-ingredients">Pisang 1 · telur 1 · oat 20g · madu 1 sdt</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Pancake tanpa tepung putih — hanya pisang, telur, dan oat. Memberi protein, kalium, dan serat tanpa lonjakan gula darah. Cocok untuk hari santai yang masih ingin sehat.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Pagi · 10:30</span>
+            <span class="meal-cal">120 kkal</span>
+          </div>
+          <div class="meal-name">Greek Yogurt + Madu</div>
+          <div class="meal-ingredients">Greek yogurt 100g · madu raw 1 sdt</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Probiotik untuk kesehatan pencernaan, protein untuk pemulihan, madu raw dengan sifat antimikroba alami yang mendukung imunitas.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Siang · 13:00</span>
+            <span class="meal-cal">400 kkal</span>
+          </div>
+          <div class="meal-name">Brown Rice + Ayam + Sayur Asem</div>
+          <div class="meal-ingredients">Brown rice 100g · ayam 80g · sayur asem (kacang panjang, jagung, melinjo, daun melinjo)</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Sayur asem adalah sayur tradisional yang kaya serat dan rendah kalori. Kacang panjang memberi protein nabati tambahan, jagung memberi karbohidrat kompleks, daun melinjo kaya antioksidan.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Snack Sore · 16:00</span>
+            <span class="meal-cal">150 kkal</span>
+          </div>
+          <div class="meal-name">Mixed Nuts</div>
+          <div class="meal-ingredients">Almond 10 · walnut 5</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Lemak sehat dan magnesium untuk relaksasi otot dan sistem saraf — ideal untuk hari istirahat.</p>
+          </div>
+        </div>
+
+        <div class="meal-block fade-up">
+          <div class="meal-header">
+            <span class="meal-time">Makan Malam · 19:00</span>
+            <span class="meal-cal">200 kkal</span>
+          </div>
+          <div class="meal-name">Sup Sayur Bening dengan Tahu</div>
+          <div class="meal-ingredients">Tahu 100g · wortel · bayam · buncis · jagung muda · kaldu bening</div>
+          <div class="meal-benefit">
+            <span class="benefit-label">Khasiat</span>
+            <p>Makan malam ringan untuk mempersiapkan tidur lebih cepat. Sup bening memberi hidrasi dan sayuran mudah dicerna. Tahu memberi protein tanpa beban kalori berlebih sebelum tidur.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="exercise-block fade-up">
+        <div class="exercise-label">Olahraga · 08:00</div>
+        <div class="exercise-name">Rest & Gentle Yoga</div>
+        <div class="exercise-routine">
+          <div class="routine-item"><span>Child's Pose</span><span>2 menit</span></div>
+          <div class="routine-item"><span>Cat-Cow Stretch</span><span>2 menit</span></div>
+          <div class="routine-item"><span>Supine Twist</span><span>1 menit/sisi</span></div>
+          <div class="routine-item"><span>Legs Up The Wall</span><span>5 menit</span></div>
+          <div class="routine-item"><span>Meditation</span><span>5 menit</span></div>
+        </div>
+        <div class="exercise-benefit">
+          <span class="benefit-label">Manfaat Gerakan</span>
+          <p>Hari istirahat aktif untuk recovery otot dan sistem saraf. Legs up the wall membalikkan aliran darah dan mengurangi bengkak kaki. Meditasi mengurangi kortisol yang menyimpan lemak di area perut.</p>
+        </div>
+        <div class="exercise-tip">Tip · Hari istirahat bukan kemalasan — ini bagian penting dari progress</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EXERCISE LIBRARY ========== -->
+<section class="library-section" id="exercise">
+  <div class="container">
+    <div class="library-header">
+      <div>
+        <div class="label fade-up">004 / Library Gerakan</div>
+        <h2 class="headline fade-up">Sepuluh gerakan<br>pemula.</h2>
+      </div>
+      <p class="fade-up">Setiap gerakan dirancang untuk perempuan pemula — tidak butuh alat, tidak melompat, tidak menyakiti sendi. Kualitas form lebih penting daripada jumlah repetisi.</p>
+    </div>
+
+    <div class="mosaic">
+
+      <div class="tile size-big media">
+        <img src="https://picsum.photos/seed/exercise-squat/800/800" alt="Squat">
+        <div class="tile-overlay">
+          <span class="tile-num">01 · Fundamental</span>
+          <div class="tile-title">Bodyweight Squat</div>
+          <div class="tile-desc">Membangun kekuatan paha depan, paha belakang, dan glute. Otot terbesar dalam tubuh — pembakar kalori utama saat istirahat.</div>
+        </div>
+      </div>
+
+      <div class="tile size-tall media">
+        <img src="https://picsum.photos/seed/exercise-lunge/400/800" alt="Lunge">
+        <div class="tile-overlay">
+          <span class="tile-num">02</span>
+          <div class="tile-title">Reverse Lunge</div>
+          <div class="tile-desc">Keseimbangan & kekuatan satu kaki. Lebih ramah lutut daripada forward lunge.</div>
+        </div>
+      </div>
+
+      <div class="tile media">
+        <img src="https://picsum.photos/seed/exercise-bridge/400/400" alt="Bridge">
+        <div class="tile-overlay">
+          <span class="tile-num">03</span>
+          <div class="tile-title">Glute Bridge</div>
+        </div>
+      </div>
+
+      <div class="tile tile-text pink">
+        <span class="tile-num">04 · Core</span>
+        <div>
+          <div class="tile-title">Plank Hold</div>
+          <div class="tile-desc">Membangun core tanpa flexi tulang belakang. Mulai 20 detik, tambah 5 detik setiap minggu.</div>
+        </div>
+      </div>
+
+      <div class="tile size-wide media">
+        <img src="https://picsum.photos/seed/exercise-walk/800/400" alt="Walking">
+        <div class="tile-overlay">
+          <span class="tile-num">05 · Cardio Low-Impact</span>
+          <div class="tile-title">Brisk Walking</div>
+          <div class="tile-desc">Membakar kalori tanpa stress sendi. 30 menit = ~150 kalori.</div>
+        </div>
+      </div>
+
+      <div class="tile media">
+        <img src="https://picsum.photos/seed/exercise-yoga/400/400" alt="Yoga">
+        <div class="tile-overlay">
+          <span class="tile-num">06</span>
+          <div class="tile-title">Yoga Flow</div>
+        </div>
+      </div>
+
+      <div class="tile tile-text">
+        <span class="tile-num">07</span>
+        <div>
+          <div class="tile-title">Bird Dog</div>
+          <div class="tile-desc">Core stabilization dan keseimbangan. Gerakan terbaik untuk pemula yang ingin bangun core tanpa cedera.</div>
+        </div>
+      </div>
+
+      <div class="tile size-tall media">
+        <img src="https://picsum.photos/seed/exercise-pilates/400/800" alt="Pilates">
+        <div class="tile-overlay">
+          <span class="tile-num">08</span>
+          <div class="tile-title">Pilates</div>
+          <div class="tile-desc">Kekuatan core dalam, postur, dan kesadaran tubuh.</div>
+        </div>
+      </div>
+
+      <div class="tile media">
+        <img src="https://picsum.photos/seed/exercise-pushup/400/400" alt="Push-up">
+        <div class="tile-overlay">
+          <span class="tile-num">09</span>
+          <div class="tile-title">Knee Push-up</div>
+        </div>
+      </div>
+
+      <div class="tile tile-text">
+        <span class="tile-num">10 · Dance</span>
+        <div>
+          <div class="tile-title">Dance Cardio</div>
+          <div class="tile-desc">Mood booster terbaik. Tidak ada gerakan yang salah — hanya bergerak dengan musik.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOD LIBRARY ========== -->
+<section class="food-section" id="food">
+  <div class="container">
+    <div class="library-header">
+      <div>
+        <div class="label label-light fade-up">005 / Library Bahan</div>
+        <h2 class="headline headline-light fade-up">Dua belas bahan<br>utama.</h2>
+      </div>
+      <p class="fade-up">Bahan-bahan yang muncul berulang dalam menu minggu ini. Setiap bahan punya peran spesifik — bukan sekadar "sehat", tapi punya alasan kimia untuk membantu mencapai target.</p>
+    </div>
+
+    <div class="mosaic food-mosaic">
+
+      <div class="tile size-big media">
+        <img src="https://picsum.photos/seed/food-oat/800/800" alt="Oatmeal">
+        <div class="tile-overlay">
+          <span class="tile-num">01 · Serat Larut</span>
+          <div class="tile-title">Oatmeal</div>
+          <div class="tile-desc">Beta-glucan menurunkan kolesterol LDL hingga 10%, menjaga kenyang 4 jam, memberi energi tahan lama untuk olahraga.</div>
+        </div>
+      </div>
+
+      <div class="tile tile-text pink">
+        <span class="tile-num">02 · Protein Lengkap</span>
+        <div>
+          <div class="tile-title">Telur</div>
+          <div class="tile-desc">9 asam amino esensial, kolin untuk otak, lutein untuk mata. 70 kalori per butir.</div>
+        </div>
+      </div>
+
+      <div class="tile media">
+        <img src="https://picsum.photos/seed/food-avocado/400/400" alt="Avocado">
+        <div class="tile-overlay">
+          <span class="tile-num">03</span>
+          <div class="tile-title">Alpukat</div>
+        </div>
+      </div>
+
+      <div class="tile media">
+        <img src="https://picsum.photos/seed/food-salmon/400/400" alt="Ikan">
+        <div class="tile-overlay">
+          <span class="tile-num">04</span>
+          <div class="tile-title">Ikan Kakap</div>
+        </div>
+      </div>
+
+      <div class="tile size-tall media">
+        <img src="https://picsum.photos/seed/food-spinach/400/800" alt="Spinach">
+        <div class="tile-overlay">
+          <span class="tile-num">05 · Sayuran Hijau</span>
+          <div class="tile-title">Bayam</div>
+          <div class="tile-desc">Zat besi untuk oksigenasi otot, vitamin K untuk tulang, folat untuk energi sel.</div>
+        </div>
+      </div>
+
+      <div class="tile tile-text">
+        <span class="tile-num">06</span>
+        <div>
+          <div class="tile-title">Brokoli</div>
+          <div class="tile-desc">Sulforaphane mendukung detoksifikasi hati. Vitamin C lebih tinggi dari jeruk.</div>
+        </div>
+      </div>
+
+      <div class="tile size-wide media">
+        <img src="https://picsum.photos/seed/food-quinoa/800/400" alt="Quinoa">
+        <div class="tile-overlay">
+          <span class="tile-num">07 · Karbohidrat Kompleks</span>
+          <div class="tile-title">Quinoa</div>
+          <div class="tile-desc">Complete protein nabati, serat tinggi, indeks glikemik rendah.</div>
+        </div>
+      </div>
+
+      <div class="tile media">
+        <img src="https://picsum.photos/seed/food-yogurt/400/400" alt="Yogurt">
+        <div class="tile-overlay">
+          <span class="tile-num">08</span>
+          <div class="tile-title">Greek Yogurt</div>
+        </div>
+      </div>
+
+      <div class="tile media">
+        <img src="https://picsum.photos/seed/food-almond/400/400" alt="Almond">
+        <div class="tile-overlay">
+          <span class="tile-num">09</span>
+          <div class="tile-title">Almond</div>
+        </div>
+      </div>
+
+      <div class="tile tile-text">
+        <span class="tile-num">10</span>
+        <div>
+          <div class="tile-title">Ubi Jalar</div>
+          <div class="tile-desc">Beta-karoten, vitamin A, indeks glikemik rendah. Karbohidrat yang tidak menyimpan lemak.</div>
+        </div>
+      </div>
+
+      <div class="tile media">
+        <img src="https://picsum.photos/seed/food-edamame/400/400" alt="Edamame">
+        <div class="tile-overlay">
+          <span class="tile-num">11</span>
+          <div class="tile-title">Edamame</div>
+        </div>
+      </div>
+
+      <div class="tile tile-text pink">
+        <span class="tile-num">12 · Buah</span>
+        <div>
+          <div class="tile-title">Pisang</div>
+          <div class="tile-desc">Kalium mencegah kram otot. Karbohidrat cepat sebelum olahraga.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== CHECKLIST ========== -->
+<section class="checklist-section">
+  <div class="container">
+    <div class="label fade-up">006 / Progress Tracker</div>
+    <h2 class="headline fade-up">Centang setiap<br>hari yang selesai.</h2>
+
+    <div class="checklist-grid">
+
+      <div class="checklist-day fade-up">
+        <div class="checklist-day-header">
+          <div class="checklist-day-name">Senin</div>
+          <div class="checklist-day-num">01</div>
+        </div>
+        <div class="checklist-items">
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Sarapan tepat waktu</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">5 meal sesuai jadwal</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Walking 20 menit</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Minum 2L air</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Tidur 7+ jam</span></label>
+        </div>
+      </div>
+
+      <div class="checklist-day fade-up">
+        <div class="checklist-day-header">
+          <div class="checklist-day-name">Selasa</div>
+          <div class="checklist-day-num">02</div>
+        </div>
+        <div class="checklist-items">
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Sarapan tepat waktu</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">5 meal sesuai jadwal</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Yoga 20 menit</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Minum 2L air</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Tidur 7+ jam</span></label>
+        </div>
+      </div>
+
+      <div class="checklist-day fade-up">
+        <div class="checklist-day-header">
+          <div class="checklist-day-name">Rabu</div>
+          <div class="checklist-day-num">03</div>
+        </div>
+        <div class="checklist-items">
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Sarapan tepat waktu</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">5 meal sesuai jadwal</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Bodyweight 3 set</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Minum 2L air</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Tidur 7+ jam</span></label>
+        </div>
+      </div>
+
+      <div class="checklist-day fade-up">
+        <div class="checklist-day-header">
+          <div class="checklist-day-name">Kamis</div>
+          <div class="checklist-day-num">04</div>
+        </div>
+        <div class="checklist-items">
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Sarapan tepat waktu</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">5 meal sesuai jadwal</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Pilates 20 menit</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Minum 2L air</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Tidur 7+ jam</span></label>
+        </div>
+      </div>
+
+      <div class="checklist-day fade-up">
+        <div class="checklist-day-header">
+          <div class="checklist-day-name">Jumat</div>
+          <div class="checklist-day-num">05</div>
+        </div>
+        <div class="checklist-items">
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Sarapan tepat waktu</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">5 meal sesuai jadwal</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Dance cardio 15 menit</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Minum 2L air</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Tidur 7+ jam</span></label>
+        </div>
+      </div>
+
+      <div class="checklist-day fade-up">
+        <div class="checklist-day-header">
+          <div class="checklist-day-name">Sabtu</div>
+          <div class="checklist-day-num">06</div>
+        </div>
+        <div class="checklist-items">
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Sarapan tepat waktu</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">5 meal sesuai jadwal</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Outdoor walk 30 menit</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Minum 2L air</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Tidur 7+ jam</span></label>
+        </div>
+      </div>
+
+      <div class="checklist-day fade-up" style="grid-column:span 2;">
+        <div class="checklist-day-header">
+          <div class="checklist-day-name">Minggu</div>
+          <div class="checklist-day-num">07 · Rest Day</div>
+        </div>
+        <div class="checklist-items">
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Sarapan tepat waktu</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">5 meal sesuai jadwal</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Gentle yoga 15 menit</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Minum 2L air</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Timbang berat badan pagi</span></label>
+          <label class="check-item"><input type="checkbox"><span class="check-box"></span><span class="check-text">Evaluasi minggu & rencana minggu depan</span></label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========== CLOSING ========== -->
+<section class="closing">
+  <div class="container-narrow">
+    <div class="label label-light fade-up" style="justify-content:center;display:inline-flex;">007 / Penutup</div>
+    <h2 class="closing-text fade-up">
+      Tujuh hari ini<br>bukan janji.<br>
+      <span class="pink">Ini latihan konsistensi.</span>
+    </h2>
+    <p class="closing-sub fade-up">Berat badan 40-50kg bukan angka yang diraih dalam seminggu. Tapi setiap minggu yang selesai — lengkap, tanpa bolong — adalah bukti bahwa Kiyya pasti bisa melakukannya 😘🤗 -bgz</p>
+    <div class="closing-badge fade-up">KIYYA · 2026 · DIET PLAN BY IG : @baguzae11_ ✨</div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-logo">BAGUZAE x KIYYA</div>
+    <div class="footer-meta">Diet Plan · Target 40–50kg · 2026</div>
+    <div class="footer-back"><a href="#hero">Kembali ke atas ↑</a></div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+// ========== HERO TILE FLIP GRID ==========
+const heroGrid = document.getElementById('heroGrid');
+const rows = 6, cols = 8;
+const pinkCells = [{r:0,c:2},{r:1,c:5},{r:2,c:0},{r:3,c:7},{r:4,c:3},{r:5,c:6}];
+const darkCells = [{r:0,c:6},{r:2,c:4},{r:4,c:1}];
+
+const tiles = [];
+for(let r=0;r<rows;r++){
+  for(let c=0;c<cols;c++){
+    const isPink = pinkCells.some(p=>p.r===r&&p.c===c);
+    const isDark = darkCells.some(p=>p.r===r&&p.c===c);
+    const cell = document.createElement('div');
+    cell.className = 'grid-cell' + (isPink?' is-pink':'') + (isDark?' is-dark':'');
+    cell.style.cssText = `left:${c/cols*100}%;top:${r/rows*100}%;width:${100/cols}%;height:${100/rows}%`;
+    if(!isPink && !isDark){
+      cell.style.backgroundImage = `url(https://picsum.photos/seed/kiyya-hero-portrait/1920/1080)`;
+      cell.style.backgroundPosition = `${c/(cols-1)*100}% ${r/(rows-1)*100}%`;
+      cell.style.backgroundSize = `${cols*100}% ${rows*100}%`;
+    }
+    heroGrid.appendChild(cell);
+    tiles.push(cell);
+  }
+}
+
+const tl = gsap.timeline({delay:0.15});
+tl.fromTo('#heroEyebrow',{y:15,opacity:0},{y:0,opacity:1,duration:0.5,ease:'power3.out'},0.2)
+  .fromTo('#heroTitle',{y:40,opacity:0},{y:0,opacity:1,duration:0.7,ease:'power3.out'},0.35)
+  .fromTo('#heroSub',{y:15,opacity:0},{y:0,opacity:1,duration:0.5,ease:'power3.out'},0.6)
+  .fromTo('#heroMeta',{y:-15,opacity:0},{y:0,opacity:1,duration:0.5,ease:'power3.out'},0.4)
+  .fromTo('#heroScroll',{x:15,opacity:0},{x:0,opacity:1,duration:0.5,ease:'power3.out'},0.7)
+  .fromTo(tiles,
+    {rotateX:90,y:-80,opacity:0},
+    {rotateX:0,y:0,opacity:1,duration:1.0,stagger:{each:0.025,from:'random'},ease:'expo.out'},
+    0
+  );
+
+ScrollTrigger.create({
+  trigger:'#hero',
+  start:'top top',
+  end:'+=100%',
+  scrub:1,
+  onUpdate:self=>{
+    const p = self.progress;
+    tiles.forEach((tile,i)=>{
+      const dir = i%2?1:-1;
+      gsap.set(tile,{
+        x:dir*p*15+'vw',
+        y:-p*15+'vh',
+        opacity:1-p*0.8
+      });
+    });
+    gsap.set('.hero-content',{y:p*30,opacity:1-p});
+  }
+});
+
+// ========== FADE UP ON SCROLL ==========
+const fadeEls = document.querySelectorAll('.fade-up');
+fadeEls.forEach(el=>{
+  ScrollTrigger.create({
+    trigger:el,
+    start:'top 88%',
+    once:true,
+    onEnter:()=>{
+      el.classList.add('is-in');
+    }
+  });
+});
+
+// ========== DIRECTIONAL CLIP FOR MEDIA ==========
+const dirs = [
+  'inset(0 100% 0 0)',
+  'inset(0 0 100% 0)',
+  'inset(0 0 0 100%)',
+  'inset(100% 0 0 0)'
+];
+
+document.querySelectorAll('.media').forEach((el,i)=>{
+  ScrollTrigger.create({
+    trigger:el,
+    start:'top 85%',
+    once:true,
+    onEnter:()=>{
+      gsap.fromTo(el,
+        {'clip-path':dirs[i%dirs.length]},
+        {'clip-path':'inset(0% 0% 0% 0%)',duration:1.3,ease:'power4.inOut'}
+      );
+      const img = el.querySelector('img');
+      if(img){
+        gsap.fromTo(img,{scale:1.3},{scale:1.0,duration:1.5,ease:'power3.out'});
+      }
+    }
+  });
+});
+
+// ========== MEAL BLOCK STAGGER ==========
+document.querySelectorAll('.day-section').forEach(section=>{
+  const meals = section.querySelectorAll('.meal-block');
+  ScrollTrigger.create({
+    trigger:section,
+    start:'top 70%',
+    once:true,
+    onEnter:()=>{
+      gsap.fromTo(meals,
+        {y:30,opacity:0},
+        {y:0,opacity:1,duration:0.8,stagger:0.1,ease:'power3.out'}
+      );
+    }
+  });
+});
+
+// ========== CHECKLIST INTERACTION ==========
+document.querySelectorAll('.check-item input').forEach(input=>{
+  input.addEventListener('change',e=>{
+    if(e.target.checked){
+      gsap.fromTo(e.target.parentElement,
+        {scale:0.95},
+        {scale:1,duration:0.3,ease:'back.out(2)'});
+    }
+  });
+});
+
+// ========== TODAY HIGHLIGHT ==========
+const today = new Date().getDay();
+const todayPill = document.querySelector(`.weekly-day-pill:nth-child(${today===0?7:today})`);
+if(todayPill){
+  todayPill.classList.add('today');
+}
+
+// ========== NAV LINK SMOOTH SCROLL ==========
+document.querySelectorAll('a[href^="#"]').forEach(link=>{
+  link.addEventListener('click',e=>{
+    const target = document.querySelector(link.getAttribute('href'));
+    if(target){
+      e.preventDefault();
+      gsap.to(window,{duration:1.2,scrollTo:{y:target.offsetTop-60},ease:'power3.inOut'});
+    }
+  });
+});
+
+// ========== MUSIC PLAYER ==========
+const audio = document.getElementById('bgMusic');
+const musicPlayer = document.getElementById('musicPlayer');
+const musicToggle = document.getElementById('musicToggle');
+const musicMinimize = document.getElementById('musicMinimize');
+const volumeSlider = document.getElementById('volumeSlider');
+const iconPlay = musicToggle.querySelector('.icon-play');
+const iconPause = musicToggle.querySelector('.icon-pause');
+
+audio.volume = parseInt(volumeSlider.value) / 100;
+
+setTimeout(()=>{
+  musicPlayer.classList.add('is-active');
+}, 600);
+
+// Attempt autoplay
+let autoplaySucceeded = false;
+const playPromise = audio.play();
+
+if (playPromise !== undefined) {
+  playPromise.then(() => {
+    autoplaySucceeded = true;
+    setPlayingState(true);
+  }).catch(() => {
+    setPlayingState(false);
+    showMusicHint();
+
+    const startOnInteraction = () => {
+      if (!autoplaySucceeded && audio.paused) {
+        audio.play().then(() => {
+          autoplaySucceeded = true;
+          setPlayingState(true);
+          removeMusicHint();
+        }).catch(() => {});
+      }
+      document.removeEventListener('click', startOnInteraction);
+      document.removeEventListener('touchstart', startOnInteraction);
+      document.removeEventListener('keydown', startOnInteraction);
+    };
+    document.addEventListener('click', startOnInteraction);
+    document.addEventListener('touchstart', startOnInteraction);
+    document.addEventListener('keydown', startOnInteraction);
+  });
+}
+
+// Play/Pause toggle
+musicToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (audio.paused) {
+    audio.play().then(() => {
+      setPlayingState(true);
+      removeMusicHint();
+    }).catch(() => {});
+  } else {
+    audio.pause();
+    setPlayingState(false);
+  }
+});
+
+// Minimize toggle
+musicMinimize.addEventListener('click', (e) => {
+  e.stopPropagation();
+  musicPlayer.classList.toggle('is-minimized');
+});
+
+// Volume control
+volumeSlider.addEventListener('input', (e) => {
+  audio.volume = parseInt(e.target.value) / 100;
+});
+
+audio.addEventListener('play', () => setPlayingState(true));
+audio.addEventListener('pause', () => setPlayingState(false));
+
+function setPlayingState(isPlaying) {
+  iconPlay.style.display = isPlaying ? 'none' : 'block';
+  iconPause.style.display = isPlaying ? 'block' : 'none';
+  if (isPlaying) {
+    musicPlayer.classList.add('is-playing');
+  } else {
+    musicPlayer.classList.remove('is-playing');
+  }
+}
+
+let musicHintEl = null;
+function showMusicHint() {
+  if (musicHintEl) return;
+  musicHintEl = document.createElement('div');
+  musicHintEl.className = 'music-hint';
+  musicHintEl.textContent = '♪ Click anywhere to play music';
+  document.body.appendChild(musicHintEl);
+  setTimeout(() => musicHintEl.classList.add('show'), 50);
+}
+
+function removeMusicHint() {
+  if (!musicHintEl) return;
+  musicHintEl.classList.remove('show');
+  const hint = musicHintEl;
+  musicHintEl = null;
+  setTimeout(() => {
+    if (hint && hint.parentNode) hint.parentNode.removeChild(hint);
+  }, 400);
+}
+
+// ========== REDUCED MOTION ==========
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  ScrollTrigger.getAll().forEach(st=>st.kill());
+  document.querySelectorAll('.fade-up').forEach(el=>el.classList.add('is-in'));
+  document.querySelectorAll('#heroEyebrow,#heroTitle,#heroSub,#heroMeta,#heroScroll').forEach(el=>{
+    el.style.opacity='1';
+    el.style.transform='none';
+  });
+  musicPlayer.classList.add('is-active');
+}
+</script>
+
+</body>
+</html>
